@@ -10,7 +10,6 @@ export function QueryAccountView(props) {
   const [hasAddress, setHasAddress] = useState(true);
   const [hasPrimaryEns, setHasPrimaryEns] = useState(true);
   const [daq, setDaq] = useState(false);
-  const [url, setUrl] = useState("");
 
   if (!props.address && !props.ens) {
     return <></>;
