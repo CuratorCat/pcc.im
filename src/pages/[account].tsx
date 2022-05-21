@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Web3 from "web3";
 import { QueryAccountView } from "components/QueryAccount";
+import { isAddress, getAddress } from "ethers/lib/utils";
 
 function maybeEns(str) {
   const dot = /[.]/;
@@ -11,26 +11,17 @@ function maybeEns(str) {
     str.charAt(0) != "." &&
     str.substr(str.length - 1) != "."
     ? true
-    : false
-}
-
-const isValidAddress = (str) => {
-  try {
-    const web3 = new Web3()
-    web3.utils.toChecksumAddress(str)
-    return true
-  } catch (e) {
-    return false
-  }
+    : false;
 }
 
 export default function Account() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { account } = router.query
+  const { account } = router.query;
 
-  const address = isValidAddress(account) ? router.query.account : ""
-  const ens = maybeEns(account) ? account : ""
+  // @ts-ignore
+  const address = isAddress(account) ? getAddress(account) : "";
+  const ens = maybeEns(account) ? account : "";
 
   if (address == "" && ens == "") {
     return (
@@ -41,11 +32,11 @@ export default function Account() {
   } else {
     return (
       <>
-      <Head>
-        <title>{account}</title>
-      </Head>
-      <QueryAccountView address={address} ens={ens} />
-    </>
-    )
+        <Head>
+          <title>{account}</title>
+        </Head>
+        <QueryAccountView address={address} ens={ens} />
+      </>
+    );
   }
 }
