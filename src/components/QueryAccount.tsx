@@ -1,24 +1,7 @@
-import { ethers } from "ethers";
 import { useState } from "react";
 import { isAddress } from "ethers/lib/utils";
-
-const provider = new ethers.providers.InfuraProvider(
-  1,
-  "84842078b09946638c03157f83405213"
-);
-
-(async () => {
-  const provider = new ethers.providers.InfuraProvider(
-    1,
-    "84842078b09946638c03157f83405213"
-  );
-
-  const address = await provider.resolveName("arisac.eth");
-
-  const balance = await provider.getBalance("arisac.eth");
-
-  console.log(`Balance of ${address} is:`, ethers.utils.formatEther(balance));
-})();
+import { ProfileCard } from "./ProfileCard";
+import {provider} from "provider";
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState("");
@@ -112,11 +95,7 @@ export function QueryAccountView(props) {
       );
     } else {
       return (
-        <div className="mt-5">
-          <p>address: {address}</p>
-          <p>ens: {ens}</p>
-          <p>primaryEns: {primaryEns}</p>
-        </div>
+        <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
       );
     }
   }
