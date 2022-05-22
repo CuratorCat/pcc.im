@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { provider } from 'provider'
 import { Avatar } from './Avatar'
+import Link from 'next/link'
+
 
 export function ProfileCard(props) {
   if (!props.ens) {
@@ -129,10 +131,26 @@ export function ProfileCard(props) {
     }
   })()
 
+  function matchBadge(ens, primaryEns) {
+    if (ens == null || primaryEns == null) {
+      return ""
+    } else if (primaryEns == "") {
+      return "no primary"
+    }
+    else if (ens.toLowerCase() === primaryEns.toLowerCase()) {
+      return "primary"
+    } else {
+      return "primary: " + primaryEns
+    }
+  }
+
   return (
     <div className="mt-5">
+      <p className='mb-2'>
+        <Link href="/">{"< back home"}</Link>
+      </p>
       <div>
-        <Avatar avatar={avatar} />
+        <Avatar avatar={avatar} ens={props.ens} />
       </div>
       <p>
         <span className="block mt-2 uppercase text-white/50 text-md">address</span>
@@ -140,11 +158,11 @@ export function ProfileCard(props) {
       </p>
       <p>
         <span className="block mt-2 uppercase text-white/50 text-md">ens</span>
-        {props.ens}
+        {props.ens} {matchBadge(props.ens, props.primaryEns)}
       </p>
       <p>
         <span className="block mt-2 uppercase text-white/50 text-md">primary Ens</span>
-        {props.primaryEns === null ? looking : props.primaryEns == '' ? '-' : props.primaryEns}
+        {props.primaryEns === null ? looking : props.primaryEns == '' ? '-' : props.primaryEns} 
       </p>
       <p>
         <span className="block mt-2 uppercase text-white/50 text-md">description</span>
