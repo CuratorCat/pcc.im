@@ -16,3 +16,7 @@ footer {
     @apply hover:text-white focus:text-white;
   }
 }
+
+main {
+  @apply flex flex-col px-6 min-h-[50vh];
+}

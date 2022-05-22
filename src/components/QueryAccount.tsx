@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { isAddress, getAddress } from 'ethers/lib/utils'
 import { ProfileCard } from './ProfileCard'
 import { provider } from 'provider'
+import { Layout } from 'layouts/Layout'
+import { Footer } from './Footer'
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState(null)
@@ -29,7 +31,14 @@ export function QueryAccountView(props) {
         setDaq(true)
       })
     } else {
-      return <>invalid 1</>
+      return (
+        <Layout>
+          <main>
+            <p>not valid address 1</p>
+          </main>
+          <Footer />
+        </Layout>
+      )
     }
   }
 
@@ -47,7 +56,14 @@ export function QueryAccountView(props) {
   }
 
   if (!hasAddress) {
-    return <>invalid 2</>
+    return (
+      <Layout>
+        <main>
+          <p>not valid address 2</p>
+        </main>
+        <Footer />
+      </Layout>
+    )
   }
 
   if (props.ens != '' && primaryEns === null && address != null && hasAddress && hasPrimaryEns) {
@@ -62,27 +78,47 @@ export function QueryAccountView(props) {
         }
       })
     } else {
-      return <>invalid</>
+      return (
+        <Layout>
+          <main>
+            <p>not valid address</p>
+          </main>
+          <Footer />
+        </Layout>
+      )
     }
   }
 
   if (address != '' && address != null && daq) {
     if (ens === null) {
       return (
-        <div className="mt-5">
-          <p>address: {address}</p>
-          <p>has no primary ens record</p>
-        </div>
+        <Layout>
+          <main>
+            <p>address: {address}</p>
+            <p>has no primary ens record</p>
+          </main>
+          <Footer />
+        </Layout>
       )
     } else {
-      return <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+      return (
+        <Layout>
+          <main>
+            <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+          </main>
+          <Footer />
+        </Layout>
+      )
     }
   }
 
   return (
-    <>
-      <h3>looking up</h3>
-      <h4>{props.address + props.ens}</h4>
-    </>
+    <Layout>
+      <main>
+        <h3>looking up</h3>
+        <h4>{props.address + props.ens}</h4>
+      </main>
+      <Footer />
+    </Layout>
   )
 }

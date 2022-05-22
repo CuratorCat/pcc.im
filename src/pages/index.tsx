@@ -2,29 +2,22 @@ import Head from 'next/head'
 import { Search } from 'components/Search'
 import { Header } from 'components/Header'
 import Link from 'next/link'
+import { Footer } from 'components/Footer'
+import { Layout } from 'layouts/Layout'
 
 export default Home
 
 function Home() {
   return (
-    <div>
+    <>
       <Head>
-        <title>pcc.im - ENS Profile Display Service</title>
-        <meta name="description" content="pcc.im - ENS Profile Display Service" />
+        <title>pcc.im - Show your web3 ENS Profile (beta)</title>
+        <meta name="description" content="pcc.im - Show your web3 ENS Profile (beta)" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Main />
-    </div>
-  )
-}
-
-function Main() {
-  return (
-    <div className="flex justify-center items-center">
-      <div className="m-auto max-w-2xl flex flex-col min-h-[100vh] sm:mt-16 sm:mx-8 sm:min-h-[60vh] bg-[#473A74] sm:rounded-3xl text-white overflow-hidden">
+      <Layout>
         <Header />
-
-        <main className="flex flex-col px-6">
+        <main>
           <Search />
 
           <h4 className="text-xl uppercase text-white/50 font-bold tracking-wider">Explore</h4>
@@ -84,22 +77,8 @@ function Main() {
             </Link>
           </p>
         </main>
-        <footer className="flex flex-col justify-center px-6 mt-12 py-3 text-sm text-white/50 bg-black/25">
-          <p>
-            this website is created by{' '}
-            <a href="/curatorcat.pcc.eth" className="underline">
-              curatorcat.pcc.eth
-            </a>{' '}
-            for fun
-          </p>
-          <p>this website does not track your information</p>
-          <p>
-            <a href="#" className="underline">
-              about this website
-            </a>
-          </p>
-        </footer>
-      </div>
-    </div>
+        <Footer />
+      </Layout>
+    </>
   )
 }
