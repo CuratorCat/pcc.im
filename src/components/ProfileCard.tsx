@@ -1,149 +1,177 @@
-import { useState } from "react";
-import { provider } from "provider";
+import { useState } from 'react'
+import { provider } from 'provider'
+import { Avatar } from './Avatar'
 
 export function ProfileCard(props) {
   if (!props.ens) {
-    return <></>;
+    return <></>
   }
 
-  const [avatar, setAvatar] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [twitter, setTwitter] = useState(null);
-  const [github, setGithub] = useState(null);
-  const [instagram, setInstagram] = useState(null);
-  const [facebook, setFacebook] = useState(null);
-  const [tiktok, setTiktok] = useState(null);
-  const [telegram, setTelegram] = useState(null);
+  const [avatar, setAvatar] = useState(null)
+  const [description, setDescription] = useState(null)
+  const [url, setUrl] = useState(null)
+  const [contentHash, setContentHash] = useState(null)
+  const [email, setEmail] = useState(null)
+  const [twitter, setTwitter] = useState(null)
+  const [github, setGithub] = useState(null)
+  const [instagram, setInstagram] = useState(null)
+  const [facebook, setFacebook] = useState(null)
+  const [tiktok, setTiktok] = useState(null)
+  const [telegram, setTelegram] = useState(null)
 
-  (async () => {
-    const resolver = await provider.getResolver(props.ens);
+  ;(async () => {
+    const resolver = await provider.getResolver(props.ens)
 
     if (avatar == null) {
-      resolver.getText("avatar").then((result) => {
+      resolver.getText('avatar').then(result => {
         if (result) {
-          setAvatar(result);
+          setAvatar(result)
         } else {
-          setAvatar("");
+          setAvatar('')
         }
-      });
+      })
     }
 
     if (description == null) {
-      resolver.getText("description").then((result) => {
+      resolver.getText('description').then(result => {
         if (result) {
-          setDescription(result);
+          setDescription(result)
         } else {
-          setDescription("");
+          setDescription('')
         }
-      });
+      })
     }
-    if (email === null) {
-      resolver.getText("email").then((result) => {
+
+    // get contentHash
+    if (contentHash == null) {
+      resolver.getContentHash().then(result => {
         if (result) {
-          setEmail(result);
+          setContentHash(result)
         } else {
-          setEmail("");
+          setContentHash('')
         }
-      });
+        // console.log(result)
+      })
+    }
+
+    if (email === null) {
+      resolver.getText('email').then(result => {
+        if (result) {
+          setEmail(result)
+        } else {
+          setEmail('')
+        }
+      })
     }
     if (url === null) {
-      resolver.getText("url").then((result) => {
+      resolver.getText('url').then(result => {
         if (result) {
-          setUrl(result);
+          setUrl(result)
         } else {
-          setUrl("");
+          setUrl('')
         }
-      });
+      })
     }
     if (github === null) {
-      resolver.getText("com.github").then((result) => {
+      resolver.getText('com.github').then(result => {
         if (result) {
-          setGithub(result);
+          setGithub(result)
         } else {
-          setGithub("");
+          setGithub('')
         }
-      });
+      })
     }
     if (instagram === null) {
-      resolver.getText("com.instagram").then((result) => {
+      resolver.getText('com.instagram').then(result => {
         if (result) {
-          setInstagram(result);
+          setInstagram(result)
         } else {
-          setInstagram("");
+          setInstagram('')
         }
-      });
+      })
     }
     if (facebook === null) {
-      resolver.getText("com.facebook").then((result) => {
+      resolver.getText('com.facebook').then(result => {
         if (result) {
-          setFacebook(result);
+          setFacebook(result)
         } else {
-          setFacebook("");
+          setFacebook('')
         }
-      });
+      })
     }
     if (tiktok === null) {
-      resolver.getText("com.tiktok").then((result) => {
+      resolver.getText('com.tiktok').then(result => {
         if (result) {
-          setTiktok(result);
+          setTiktok(result)
         } else {
-          setTiktok("");
+          setTiktok('')
         }
-      });
+      })
     }
+
     if (telegram === null) {
-      resolver.getText("com.telegram").then((result) => {
+      resolver.getText('com.telegram').then(result => {
         if (result) {
-          setTelegram(result);
+          setTelegram(result)
         } else {
-          setTelegram("");
+          setTelegram('')
         }
-      });
+      })
     }
     if (twitter === null) {
-      resolver.getText("com.twitter").then((result) => {
+      resolver.getText('com.twitter').then(result => {
         if (result) {
-          setTwitter(result);
+          setTwitter(result)
         } else {
-          setTwitter("");
+          setTwitter('')
         }
-      });
+      })
     }
-  })();
+  })()
 
   return (
     <div className="mt-5">
+      <div>
+        <Avatar avatar={avatar} />
+      </div>
       <p>
-        <img src={"https://metadata.ens.domains/mainnet/avatar/" + props.ens} width={100} height={100} style={{background: "grey"}} />
-      </p>
-      <p>address: {props.address}</p>
-      <p>ens: {props.ens}</p>
-      <p>primaryEns: {props.primaryEns}</p>
-      <p>
-        description: <br />{" "}
-        {description === null
-          ? "looking up"
-          : description == ""
-          ? "n/a"
-          : description}
+        <span className="block mt-2 uppercase text-white/50 text-md">address</span>
+        {props.address}
       </p>
       <p>
-        url: <br /> {url === null ? "looking up" : url == "" ? "n/a" : url}
+        <span className="block mt-2 uppercase text-white/50 text-md">ens</span>
+        {props.ens}
       </p>
       <p>
-        email: <br />{" "}
-        {email === null ? "looking up" : email == "" ? "n/a" : email}
+        <span className="block mt-2 uppercase text-white/50 text-md">primary Ens</span>
+        {props.primaryEns === null ? looking : props.primaryEns == '' ? '-' : props.primaryEns}
       </p>
       <p>
-        twitter: <br />{" "}
-        {twitter === null ? "looking up" : twitter == "" ? "n/a" : twitter}
+        <span className="block mt-2 uppercase text-white/50 text-md">description</span>
+        {description === null ? looking : description == '' ? '-' : description}
       </p>
       <p>
-        github: <br />{" "}
-        {github === null ? "looking up" : github == "" ? "n/a" : github}
+        <span className="block mt-2 uppercase text-white/50 text-md">url</span>
+        {url === null ? looking : url == '' ? '-' : url}
+      </p>
+      <p>
+        <span className="block mt-2 uppercase text-white/50 text-md">content Hash</span>
+        {contentHash === null ? looking : contentHash == '' ? '-' : contentHash}
+      </p>
+      <p>
+        <span className="block mt-2 uppercase text-white/50 text-md">email</span>
+        {email === null ? looking : email == '' ? '-' : email}
+      </p>
+      <p>
+        <span className="block mt-2 uppercase text-white/50 text-md">twitter</span>
+        {twitter === null ? looking : twitter == '' ? '-' : twitter}
+      </p>
+      <p>
+        <span className="block mt-2 uppercase text-white/50 text-md">github</span>
+        {github === null ? looking : github == '' ? '-' : github}
       </p>
     </div>
-  );
+  )
 }
+
+const looking = <span className="inline-block animate-bounce">👀</span>
