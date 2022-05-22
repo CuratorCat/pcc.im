@@ -6,9 +6,8 @@ export function Header() {
       <header className="flex items-center p-6">
         <Link href="/">
           <a tabIndex={-1}>
-            <h1 className="text-4xl font-light tracking-wider relative">
-              <span>pcc.im</span>
-
+            <h1 className="text-4xl font-light relative">
+              pcc.im
               <p className="text-2xl font-light">show your ens profile</p>
             </h1>
           </a>
