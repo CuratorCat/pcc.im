@@ -20,3 +20,7 @@ footer {
 main {
   @apply flex flex-col px-6 min-h-[50vh];
 }
+
+.profile-view {
+  @apply py-6;
+}

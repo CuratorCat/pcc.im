@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { QueryAccountView } from 'components/QueryAccount'
 import { isAddress } from 'ethers/lib/utils'
+import { useEffect } from 'react'
 
 function maybeEns(str) {
   const dot = /[.]/
@@ -13,8 +14,11 @@ function maybeEns(str) {
 
 export default function Account() {
 
+
   const router = useRouter()
   const { account } = router.query
+
+  
 
   // @ts-ignore
   const address = isAddress(account) ? account : ''

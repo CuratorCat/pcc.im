@@ -104,7 +104,9 @@ export function QueryAccountView(props) {
       return (
         <Layout>
           <main>
-            <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+            <div className="profile-view">
+              <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+            </div>
           </main>
           <Footer />
         </Layout>
@@ -115,8 +117,13 @@ export function QueryAccountView(props) {
   return (
     <Layout>
       <main>
-        <h3>looking up</h3>
-        <h4>{props.address + props.ens}</h4>
+        <div className="profile-view">
+          <div className="text-xl">
+            <h3 className="text-3xl">looking up</h3>
+            <p className="font-light">{props.address + props.ens}</p>
+            <p>on blockchain</p>
+          </div>
+        </div>
       </main>
       <Footer />
     </Layout>
