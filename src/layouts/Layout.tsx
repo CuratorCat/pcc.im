@@ -4,8 +4,8 @@ export function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>pcc.im, show your web3 ENS profile (beta)</title>
-        <meta name="description" content="pcc.im, show your web3 ENS profile (beta)" />
+        <title>pcc.im, show your web3 ENS profile (alpha)</title>
+        <meta name="description" content="pcc.im, show your web3 ENS profile (alpha)" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex justify-center items-center">
