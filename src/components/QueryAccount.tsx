@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { isAddress, getAddress } from 'ethers/lib/utils'
 import { ProfileCard } from './ProfileCard'
 import { provider } from 'provider'
-import { Layout } from 'layouts/Layout'
 import { Footer } from './Footer'
 
 export function QueryAccountView(props) {
@@ -32,12 +31,12 @@ export function QueryAccountView(props) {
       })
     } else {
       return (
-        <Layout>
+        <>
           <main>
             <p>not valid address 1</p>
           </main>
           <Footer />
-        </Layout>
+        </>
       )
     }
   }
@@ -57,12 +56,12 @@ export function QueryAccountView(props) {
 
   if (!hasAddress) {
     return (
-      <Layout>
+      <>
         <main>
           <p>not valid address 2</p>
         </main>
         <Footer />
-      </Layout>
+      </>
     )
   }
 
@@ -79,12 +78,12 @@ export function QueryAccountView(props) {
       })
     } else {
       return (
-        <Layout>
+        <>
           <main>
             <p>not valid address</p>
           </main>
           <Footer />
-        </Layout>
+        </>
       )
     }
   }
@@ -92,30 +91,30 @@ export function QueryAccountView(props) {
   if (address != '' && address != null && daq) {
     if (ens === null) {
       return (
-        <Layout>
+        <>
           <main>
             <p>address: {address}</p>
             <p>has no primary ens record</p>
           </main>
           <Footer />
-        </Layout>
+        </>
       )
     } else {
       return (
-        <Layout>
+        <>
           <main>
             <div className="profile-view">
               <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
             </div>
           </main>
           <Footer />
-        </Layout>
+        </>
       )
     }
   }
 
   return (
-    <Layout>
+    <>
       <main>
         <div className="profile-view">
           <div className="text-xl">
@@ -126,6 +125,6 @@ export function QueryAccountView(props) {
         </div>
       </main>
       <Footer />
-    </Layout>
+    </>
   )
 }

@@ -12,7 +12,7 @@ export function Header() {
             </h1>
           </a>
         </Link>
-        <div className="bg-black/50 p-1 rounded text-xs italic opacity-50 not-sr-only">beta</div>
+        <div className="bg-black/50 p-1 rounded text-xs opacity-50 not-sr-only">alpha</div>
       </header>
     </>
   )

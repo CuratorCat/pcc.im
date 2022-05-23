@@ -148,7 +148,7 @@ export function ProfileCard(props) {
     } else {
       return (
         <div className="w-fit px-2 py-0.5 rounded-full bg-[#866EC9] text-[#473A74] text-xs font-semibold">
-          <a href={'/' + primaryEns}>{primaryEns}</a>
+          <Link href={'/' + primaryEns}>{primaryEns}</Link>
         </div>
       )
     }
@@ -163,18 +163,10 @@ export function ProfileCard(props) {
     }
     return (
       <>
-        <p>
-          {description === null ? looking : description == '' ? '' : description}
-        </p>
-        <p>
-          {url === null ? looking : url == '' ? '' : url}
-        </p>
-        <p>
-          {contentHash === null ? looking : contentHash == '' ? '' : contentHash}
-        </p>
-        <p>
-          {email === null ? looking : email == '' ? '' : email}
-        </p>
+        <p>{description === null ? looking : description == '' ? '' : description}</p>
+        <p>{url === null ? looking : url == '' ? '' : url}</p>
+        <p>{contentHash === null ? looking : contentHash == '' ? '' : contentHash}</p>
+        <p>{email === null ? looking : email == '' ? '' : email}</p>
       </>
     )
   }
