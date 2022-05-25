@@ -1,3 +1,29 @@
+import { useState } from 'react'
+
+
+function ImgLoader(ens) {
+  const [loaded, setLoaded] = useState(false)
+  console.log("src", ens)
+
+  return (
+    <div>
+      {loaded ? null : (
+        <div className="absolute inset-0">
+          <div className="flex h-full bg-gray-200/50 rounded-xl overflow-hidden animate-pulse">
+            <div className="m-auto text-center">loading</div>
+          </div>
+        </div>
+      )}
+      <img
+        src={'https://metadata.ens.domains/mainnet/avatar/' + ens}
+        className="absolute w-full h-full rounded-xl overflow-hidden"
+        onLoad={() => setLoaded(true)}
+        alt=""
+      />
+    </div>
+  )
+}
+
 export function Avatar(props) {
   if (props.avatar == null) {
     return (
@@ -22,18 +48,10 @@ export function Avatar(props) {
       </div>
     )
   } else {
+    console.log(props.ens)
     return (
       <div className="relative w-[100px] h-[100px] rounded-xl overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="flex h-full bg-gray-200/50 rounded-xl overflow-hidden animate-pulse">
-            <div className="m-auto text-center">loading</div>
-          </div>
-        </div>
-        <img
-          src={'https://metadata.ens.domains/mainnet/avatar/' + props.ens}
-          className="absolute w-full h-full rounded-xl overflow-hidden"
-          alt=""
-        />
+        {ImgLoader(props.ens)}
       </div>
     )
   }

@@ -6,9 +6,42 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { useEffect } from 'react'
 
+
+
+function trimUrl(url = '') {
+  return url
+    .replace(/^(https:\/\/)/i, '')
+    .replace(/^(http:\/\/)/i, '')
+    .replace(/(\/)$/i, '')
+}
+
+function formatTwitterHandle(str = '') {
+  return str
+    .replace(/^(https:\/\/twitter.com\/)/i, '')
+    .replace(/^(http:\/\/twitter.com\/)/i, '')
+    .replace(/^(@)/i, '')
+    .replace(/(\/)$/i, '')
+}
+
+function formatGithubHandle(str = '') {
+  return str
+    .replace(/^(https:\/\/github.com\/)/i, '')
+    .replace(/^(http:\/\/github.com\/)/i, '')
+    .replace(/^(@)/i, '')
+    .replace(/(\/)$/i, '')
+}
+
+function formatInstagramHandle(str = '') {
+  return str
+    .replace(/^(https:\/\/instagram.com\/)/i, '')
+    .replace(/^(http:\/\/instagram.com\/)/i, '')
+    .replace(/^(@)/i, '')
+    .replace(/(\/)$/i, '')
+}
+
 export function ProfileCard(props) {
   if (!props.ens) {
-    return <></>
+    return null
   }
 
   const [avatar, setAvatar] = useState(null)
@@ -80,28 +113,26 @@ export function ProfileCard(props) {
     fetchData().catch(console.error)
   }, [])
 
-  function matchBadge(ens, primaryEns) {
-    if (ens == null || primaryEns == null) {
+  function primaryEnsBadge(ens, primaryEns) {
+    if (!primaryEns) {
       return (
-        <div className="w-fit px-2 py-0.5 rounded-full bg-black/20 text-xs uppercase text-white animate-pulse">
-          🧐 validating
+        <div className="w-fit px-2 py-0.5 rounded-full bg-black/10  text-xs uppercase text-white/25">
+          no primary ens
         </div>
       )
-    } else if (primaryEns == '') {
-      return <div className="w-fit px-2 py-0.5 rounded-full bg-black/10  text-xs uppercase">no primary ens</div>
-    } else if (ens.toLowerCase() === primaryEns.toLowerCase()) {
+    }
+    if (ens.toLowerCase() === primaryEns.toLowerCase()) {
       return (
         <div className="w-fit px-2 py-0.5 rounded-full bg-[#866EC9] text-[#473A74] text-xs font-semibold uppercase">
           primary ens
         </div>
       )
-    } else {
-      return (
-        <div className="w-fit px-2 py-0.5 rounded-full bg-[#866EC9] text-[#473A74] text-xs font-semibold">
-          <Link href={'/' + primaryEns}>{primaryEns}</Link>
-        </div>
-      )
     }
+    return (
+      <div className="w-fit px-2 py-0.5 rounded-full bg-[#866EC9] text-[#473A74] text-xs font-semibold">
+        <Link href={'/' + primaryEns}>{primaryEns}</Link>
+      </div>
+    )
   }
 
   const Bio = () => {
@@ -115,9 +146,17 @@ export function ProfileCard(props) {
       <>
         <p>{description === null ? looking : description == '' ? '' : description}</p>
         <div className="break-all">
-          <p>{url === null ? looking : url == '' ? '' : (<>
-            🔗 <Link href={url}>{url}</Link>
-          </>)}</p>
+          <p>
+            {url === null ? (
+              looking
+            ) : url == '' ? (
+              ''
+            ) : (
+              <>
+                🔗 <Link href={'https://' + trimUrl(url)}>{trimUrl(url)}</Link>
+              </>
+            )}
+          </p>
           <p>{contentHash === null ? looking : contentHash == '' ? '' : '#️⃣ ' + contentHash}</p>
           <p>
             {email === null ? (
@@ -144,12 +183,12 @@ export function ProfileCard(props) {
     }
     return (
       <>
-        {twitter === '' ? (
+        {twitter == '' || twitter == null ? (
           ''
         ) : (
           <p>
             <span className="block mt-2 uppercase text-white/50 text-md">twitter</span>
-            {twitter}
+            {formatTwitterHandle(twitter)}
           </p>
         )}
         {github === '' ? (
@@ -170,7 +209,7 @@ export function ProfileCard(props) {
       <Avatar avatar={avatar} ens={props.ens} />
       <div>
         <p className="text-2xl">{props.ens}</p>
-        {matchBadge(props.ens, props.primaryEns)}
+        {primaryEnsBadge(props.ens, props.primaryEns)}
       </div>
       <Bio />
       <H3>socials</H3>
