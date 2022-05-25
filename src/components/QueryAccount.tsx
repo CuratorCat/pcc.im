@@ -4,12 +4,14 @@ import { ProfileCard } from './ProfileCard'
 import { provider } from 'provider'
 import { Search } from './Search'
 import { ExpoloreEns } from './ExploreEns'
+import { useRouter } from 'next/router'
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState(null)
   const [ens, setEns] = useState(null)
   const [primaryEns, setPrimaryEns] = useState(null)
   const [proceed, setProceed] = useState(false)
+  const router = useRouter()
 
   if (!props.address && !props.ens) {
     return null
@@ -22,11 +24,10 @@ export function QueryAccountView(props) {
       // check ens
       console.log('looking ens for', props.address)
       provider.lookupAddress(props.address).then(resolvedName => {
-        // has resolver, set ens & primaryEns
+        // has resolver, replace url
         if (resolvedName) {
           console.log('found ens', resolvedName)
-          setEns(resolvedName)
-          setPrimaryEns(resolvedName)
+          router.replace('/' + resolvedName)
         }
         // no resolver
         else {
