@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { provider } from 'provider'
 import { Avatar } from './Avatar'
 import Link from 'next/link'
+import { Disclosure, Transition } from '@headlessui/react'
+import { ChevronUpIcon } from '@heroicons/react/solid'
+import { useEffect } from 'react'
 
 export function ProfileCard(props) {
   if (!props.ens) {
@@ -20,115 +23,62 @@ export function ProfileCard(props) {
   const [tiktok, setTiktok] = useState(null)
   const [telegram, setTelegram] = useState(null)
 
-  ;(async () => {
-    const resolver = await provider.getResolver(props.ens)
+  useEffect(() => {
+    const fetchData = async () => {
+      const resolver = await provider.getResolver(props.ens)
 
-    if (avatar == null) {
       resolver.getText('avatar').then(result => {
-        if (result) {
-          setAvatar(result)
-        } else {
-          setAvatar('')
-        }
+        result ? setAvatar(result) : setAvatar('')
       })
-    }
 
-    if (description == null) {
       resolver.getText('description').then(result => {
-        if (result) {
-          setDescription(result)
-        } else {
-          setDescription('')
-        }
+        result ? setDescription(result) : setDescription('')
       })
-    }
 
-    // get contentHash
-    if (contentHash == null) {
-      resolver.getContentHash().then(result => {
-        if (result) {
-          setContentHash(result)
-        } else {
-          setContentHash('')
-        }
-        // console.log(result)
-      })
-    }
+      // get contentHash
+      if (!props.ens.endsWith('.pcc.eth')) {
+        resolver.getContentHash().then(result => {
+          result ? setContentHash(result) : setContentHash('')
+        })
+      } else {
+        setContentHash('')
+      }
 
-    if (email === null) {
       resolver.getText('email').then(result => {
-        if (result) {
-          setEmail(result)
-        } else {
-          setEmail('')
-        }
+        result ? setEmail(result) : setEmail('')
       })
-    }
-    if (url === null) {
+
       resolver.getText('url').then(result => {
-        if (result) {
-          setUrl(result)
-        } else {
-          setUrl('')
-        }
+        result ? setUrl(result) : setUrl('')
       })
-    }
-    if (github === null) {
+
       resolver.getText('com.github').then(result => {
-        if (result) {
-          setGithub(result)
-        } else {
-          setGithub('')
-        }
+        result ? setGithub(result) : setGithub('')
       })
-    }
-    if (instagram === null) {
+
       resolver.getText('com.instagram').then(result => {
-        if (result) {
-          setInstagram(result)
-        } else {
-          setInstagram('')
-        }
+        result ? setInstagram(result) : setInstagram('')
       })
-    }
-    if (facebook === null) {
+
       resolver.getText('com.facebook').then(result => {
-        if (result) {
-          setFacebook(result)
-        } else {
-          setFacebook('')
-        }
+        result ? setFacebook(result) : setFacebook('')
       })
-    }
-    if (tiktok === null) {
+
       resolver.getText('com.tiktok').then(result => {
-        if (result) {
-          setTiktok(result)
-        } else {
-          setTiktok('')
-        }
+        result ? setTiktok(result) : setTiktok('')
+      })
+
+      resolver.getText('com.telegram').then(result => {
+        result ? setTelegram(result) : setTelegram('')
+      })
+
+      resolver.getText('com.twitter').then(result => {
+        result ? setTwitter(result) : setTwitter('')
       })
     }
 
-    if (telegram === null) {
-      resolver.getText('com.telegram').then(result => {
-        if (result) {
-          setTelegram(result)
-        } else {
-          setTelegram('')
-        }
-      })
-    }
-    if (twitter === null) {
-      resolver.getText('com.twitter').then(result => {
-        if (result) {
-          setTwitter(result)
-        } else {
-          setTwitter('')
-        }
-      })
-    }
-  })()
+    fetchData().catch(console.error)
+  }, [])
 
   function matchBadge(ens, primaryEns) {
     if (ens == null || primaryEns == null) {
@@ -164,9 +114,23 @@ export function ProfileCard(props) {
     return (
       <>
         <p>{description === null ? looking : description == '' ? '' : description}</p>
-        <p>{url === null ? looking : url == '' ? '' : url}</p>
-        <p>{contentHash === null ? looking : contentHash == '' ? '' : contentHash}</p>
-        <p>{email === null ? looking : email == '' ? '' : email}</p>
+        <div className="break-all">
+          <p>{url === null ? looking : url == '' ? '' : (<>
+            🔗 <Link href={url}>{url}</Link>
+          </>)}</p>
+          <p>{contentHash === null ? looking : contentHash == '' ? '' : '#️⃣ ' + contentHash}</p>
+          <p>
+            {email === null ? (
+              looking
+            ) : email == '' ? (
+              ''
+            ) : (
+              <>
+                <a href={'mailto:' + email}>📧 {email}</a>
+              </>
+            )}
+          </p>
+        </div>
       </>
     )
   }
@@ -180,14 +144,22 @@ export function ProfileCard(props) {
     }
     return (
       <>
-        <p>
-          <span className="block mt-2 uppercase text-white/50 text-md">twitter</span>
-          {twitter === null ? looking : twitter == '' ? '-' : twitter}
-        </p>
-        <p>
-          <span className="block mt-2 uppercase text-white/50 text-md">github</span>
-          {github === null ? looking : github == '' ? '-' : github}
-        </p>
+        {twitter === '' ? (
+          ''
+        ) : (
+          <p>
+            <span className="block mt-2 uppercase text-white/50 text-md">twitter</span>
+            {twitter}
+          </p>
+        )}
+        {github === '' ? (
+          ''
+        ) : (
+          <p>
+            <span className="block mt-2 uppercase text-white/50 text-md">github</span>
+            {github}
+          </p>
+        )}
       </>
     )
   }
@@ -204,8 +176,10 @@ export function ProfileCard(props) {
       <H3>socials</H3>
       <Socials />
 
+      {/* <Example /> */}
+
       <H3>addresses</H3>
-      <p>
+      <p className="break-all">
         <span className="block mt-2 uppercase text-white/50 text-md">ethereum</span>
         {props.address}
       </p>
@@ -218,7 +192,43 @@ const looking = <span className="inline-block animate-bounce">👀</span>
 function H3({ children }) {
   return (
     <>
-      <h3 className="text-4xl mt-3 mb-3 font-light text-black/30">{children}</h3>
+      <h3 className="text-4xl mt-3 mb-3 font-light text-violet-400">{children}</h3>
     </>
+  )
+}
+
+function Example() {
+  return (
+    <Disclosure defaultOpen>
+      {({ open }) => (
+        <>
+          <Disclosure.Button className="relative w-full mx-0 rounded-lg">
+            <div className={`${open ? '' : 'bg-black/10'} absolute inset-0  -ml-3 -mr-3 rounded-lg`}></div>
+            <div className="flex w-full justify-between items-center">
+              <H3>socials</H3>
+              <ChevronUpIcon className={`${open ? 'rotate-180' : ''} h-8 w-8 opacity-10 `} />
+            </div>
+          </Disclosure.Button>
+
+          {/*
+              Don't forget to add `static` to your Disclosure.Panel!
+            */}
+          <Disclosure.Panel>
+            If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full,
+            no questions asked. If you're unhappy with your purchase for any reason, email us within 90 days and we'll
+            refund you in full, no questions asked. If you're unhappy with your purchase for any reason, email us within
+            90 days and we'll refund you in full, no questions asked. If you're unhappy with your purchase for any
+            reason, email us within 90 days and we'll refund you in full, no questions asked.If you're unhappy with your
+            purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.If you're
+            unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no
+            questions asked.If you're unhappy with your purchase for any reason, email us within 90 days and we'll
+            refund you in full, no questions asked.If you're unhappy with your purchase for any reason, email us within
+            90 days and we'll refund you in full, no questions asked.If you're unhappy with your purchase for any
+            reason, email us within 90 days and we'll refund you in full, no questions asked.If you're unhappy with your
+            purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   )
 }

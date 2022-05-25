@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "fonts.scss";
+@import 'fonts.scss';
 
 html,
 body {
@@ -9,7 +9,7 @@ body {
 }
 
 .example-links {
-  @apply inline-block px-1.5 py-0.5 mr-1.5 -ml-1.5 text-white/50 hover:text-white focus:text-white bg-white/0 hover:bg-black/25 focus:bg-black/25  focus:ring-2 focus:ring-violet-700 focus:ring-offset-0 rounded-lg transition-all duration-300 text-sm md:text-base max-w-sm break-all leading-tight;
+  @apply inline-block px-1.5 py-0.5 mr-1.5 -ml-1.5 text-white/50 hover:text-white focus:text-white bg-white/0 hover:bg-black/25 focus:bg-black/25  focus:ring-2 focus:ring-violet-700 focus:ring-offset-0 rounded-lg transition-all duration-300 text-sm md:text-base break-all leading-tight;
 }
 
 footer {
@@ -18,10 +18,4 @@ footer {
   }
 }
 
-main {
-  @apply flex flex-col px-6 min-h-[50vh];
-}
 
-.profile-view {
-  @apply py-6;
-}

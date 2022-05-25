@@ -1,130 +1,119 @@
-import { useState } from 'react'
-import { isAddress, getAddress } from 'ethers/lib/utils'
+import { useEffect, useState } from 'react'
+import { getAddress } from 'ethers/lib/utils'
 import { ProfileCard } from './ProfileCard'
 import { provider } from 'provider'
-import { Footer } from './Footer'
+import { Search } from './Search'
+import { ExpoloreEns } from './ExploreEns'
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState(null)
   const [ens, setEns] = useState(null)
   const [primaryEns, setPrimaryEns] = useState(null)
-  const [hasAddress, setHasAddress] = useState(true)
-  const [hasPrimaryEns, setHasPrimaryEns] = useState(true)
-  const [daq, setDaq] = useState(false)
+  const [proceed, setProceed] = useState(false)
 
   if (!props.address && !props.ens) {
-    return <></>
+    return null
   }
 
-  if (props.address != '' && address === null && props.ens === '' && ens === null && primaryEns === null) {
-    if (isAddress(props.address)) {
-      // console.log("fetching ens... ")
+  useEffect(() => {
+    console.log('🛠😺')
+    // address
+    if (props.address) {
+      // check ens
+      console.log('looking ens for', props.address)
       provider.lookupAddress(props.address).then(resolvedName => {
-        if (resolvedName === null) {
-          setHasPrimaryEns(false)
-        } else {
+        // has resolver, set ens & primaryEns
+        if (resolvedName) {
+          console.log('found ens', resolvedName)
           setEns(resolvedName)
           setPrimaryEns(resolvedName)
         }
+        // no resolver
+        else {
+          console.log('no ens found')
+        }
+        // set checksum address and proceed
         setAddress(getAddress(props.address))
-        setDaq(true)
+        setProceed(true)
       })
-    } else {
-      return (
-        <>
-          <main>
-            <p>not valid address 1</p>
-          </main>
-          <Footer />
-        </>
-      )
     }
-  }
 
-  if (address === null && props.address === '' && props.ens != '' && address === null && hasPrimaryEns) {
-    // console.log("fetching addr... ")
-    provider.resolveName(props.ens).then(resolvedAddress => {
-      if (resolvedAddress === null) {
-        setHasAddress(false)
-      } else {
-        setAddress(resolvedAddress)
-        setEns(props.ens)
-      }
-      setDaq(true)
-    })
-  }
+    // maybe ens
+    if (props.ens) {
+      // check ens for resolver
+      console.log('looking up resolver for', props.ens)
+      provider.getResolver(props.ens).then(resolver => {
+        if (resolver) {
+          // has resovler, set ens
+          console.log('resolver found', resolver.address)
+          console.log('resolving addr for', props.ens)
+          setEns(props.ens)
 
-  if (!hasAddress) {
+          // check address
+          provider.resolveName(props.ens).then(resolvedAddress => {
+            // has address, set address
+            if (resolvedAddress) {
+              console.log('resolvedAddress', resolvedAddress)
+              setAddress(resolvedAddress)
+
+              // check primaryEns
+              console.log('looking up primaryEns for', resolvedAddress)
+              provider.lookupAddress(resolvedAddress).then(resolvedName => {
+                // has primaryEns, set primaryEns
+                if (resolvedName) {
+                  console.log('primaryEns', resolvedName)
+                  setPrimaryEns(resolvedName)
+                }
+
+                // no primaryEns, set ens
+                else {
+                  console.log('no primaryEns for', resolvedAddress)
+                }
+                setProceed(true)
+              })
+            }
+
+            // no eth address
+            else {
+              console.log(props.ens, 'has no ETH addr')
+              setProceed(true)
+            }
+          })
+        } else {
+          console.log('no resolver found')
+          setProceed(true)
+        }
+      })
+    }
+  }, [props.address, props.ens])
+
+  if (!proceed) {
     return (
-      <>
-        <main>
-          <p>not valid address 2</p>
-        </main>
-        <Footer />
-      </>
+      <div className="profile-view">
+        <div className="text-xl">
+          <h3 className="text-3xl">looking up</h3>
+          <p className="font-light break-all text-4xl">{props.address + props.ens}</p>
+          <p>on blockchain</p>
+        </div>
+      </div>
     )
   }
 
-  if (props.ens != '' && primaryEns === null && address != null && hasAddress && hasPrimaryEns) {
-    if (isAddress(address)) {
-      // console.log("fetching primaryEns... ")
-      provider.lookupAddress(address).then(resolvedName => {
-        if (resolvedName === null) {
-          setHasPrimaryEns(false)
-          setPrimaryEns('')
-        } else {
-          setPrimaryEns(resolvedName)
-        }
-      })
-    } else {
-      return (
-        <>
-          <main>
-            <p>not valid address</p>
-          </main>
-          <Footer />
-        </>
-      )
-    }
+  if (ens === null) {
+    return (
+      <>
+        <h3 className="text-3xl mb-6">
+          can not found ens profile for {props.address} {props.ens}
+        </h3>
+        <Search />
+        <ExpoloreEns />
+      </>
+    )
+  } else {
+    return (
+      <div className="profile-view">
+        <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+      </div>
+    )
   }
-
-  if (address != '' && address != null && daq) {
-    if (ens === null) {
-      return (
-        <>
-          <main>
-            <p>address: {address}</p>
-            <p>has no primary ens record</p>
-          </main>
-          <Footer />
-        </>
-      )
-    } else {
-      return (
-        <>
-          <main>
-            <div className="profile-view">
-              <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
-            </div>
-          </main>
-          <Footer />
-        </>
-      )
-    }
-  }
-
-  return (
-    <>
-      <main>
-        <div className="profile-view">
-          <div className="text-xl">
-            <h3 className="text-3xl">looking up</h3>
-            <p className="font-light">{props.address + props.ens}</p>
-            <p>on blockchain</p>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </>
-  )
 }
