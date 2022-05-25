@@ -10,7 +10,7 @@ export default function Test() {
         <div className="flex space-x-4 my-3">
           <div className="flex shrink-0">
             <img
-              src="https://metadata.ens.domains/mainnet/avatar/arisac.eth"
+              src="https://metadata.ens.domains/mainnet/avatar/curatorcat.eth"
               className="w-20 h-20 rounded-full overflow-hidden"
               alt=""
             />
