@@ -3,10 +3,9 @@ import { provider } from 'provider'
 import { Avatar } from './Avatar'
 import Link from 'next/link'
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/solid'
+import { ChevronLeftIcon, ChevronUpIcon, HomeIcon } from '@heroicons/react/solid'
 import { useEffect } from 'react'
-
-
+import { ArrowCircleLeftIcon } from '@heroicons/react/outline'
 
 function trimUrl(url = '') {
   return url
@@ -204,8 +203,9 @@ export function ProfileCard(props) {
   }
 
   return (
-    <div>
-      <H3>{props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
+    <div className="relative">
+      
+      <H3> {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
       <Avatar avatar={avatar} ens={props.ens} />
       <div>
         <p className="text-2xl">{props.ens}</p>
@@ -231,7 +231,7 @@ const looking = <span className="inline-block animate-bounce">👀</span>
 function H3({ children }) {
   return (
     <>
-      <h3 className="text-4xl mt-3 mb-3 font-light text-violet-400">{children}</h3>
+      <h3 className="text-4xl mb-3 font-light text-violet-400">{children}</h3>
     </>
   )
 }

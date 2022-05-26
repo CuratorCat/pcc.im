@@ -1,5 +1,5 @@
 import { Search } from 'components/Search'
-import { Layout } from 'layouts/Layout'
+import { Layout } from 'layouts'
 import { ExpoloreEns } from 'components/ExploreEns'
 import Head from 'next/head'
 import Link from 'next/link'

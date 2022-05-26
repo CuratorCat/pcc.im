@@ -29,7 +29,7 @@ export function Layout({ children }) {
   )
 }
 
-function GlobalHead() {
+export function GlobalHead() {
   return (
     <Head>
       <title>pcc.im, show your web3 ENS profile (alpha)</title>

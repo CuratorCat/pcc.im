@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { QueryAccountView } from 'components/QueryAccount'
 import { isAddress } from 'ethers/lib/utils'
-import { Layout } from 'layouts/Layout'
+import { Layout } from 'layouts'
 
 export default function Account() {
   const router = useRouter()
