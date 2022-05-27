@@ -75,9 +75,10 @@ export function ProfileCard(props) {
       })
 
       // get addresses
-      resolver.getAddress(0).then(result => {
-        result ? setBtcAddress(result) : setBtcAddress('')
-      })
+      // resolver.getAddress(0).then(result => {
+      //   result ? setBtcAddress(result) : setBtcAddress('')
+      // })
+      setBtcAddress('')
     }
 
     fetchData().catch(console.error)
