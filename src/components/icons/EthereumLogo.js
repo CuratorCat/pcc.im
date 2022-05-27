@@ -14,7 +14,7 @@ function EthereumLogo(props, svgRef) {
       props
     ),
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <circle id="Oval" fill="#FFFFFF" cx="10" cy="10" r="10"></circle>
+      <circle id="Oval" fill="#FFFFFF00" cx="10" cy="10" r="10"></circle>
       <polygon id="Fill-4" fill="#63688F" points="10.3735045 0.999994669 10.3735045 7.65250293 15.9962725 10.1649947"></polygon>
       <polygon id="Fill-6" fill="#8A93B2" points="10.3735045 0.999994669 4.75001487 10.1649947 10.3735045 7.65250293"></polygon>
       <polygon id="Fill-8" fill="#63688F" points="10.3735045 14.4760045 10.3735045 18.996272 16.0000123 11.2119992"></polygon>

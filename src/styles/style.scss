@@ -72,13 +72,13 @@ footer {
   li {
     @apply flex space-x-2 items-center;
     .logo {
-      @apply flex shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full place-items-center items-center text-center align-middle justify-center;
+      @apply flex shrink-0 w-10 h-10 rounded-full place-items-center items-center text-center align-middle justify-center;
     }
     .asset {
       @apply flex-grow break-all;
       
       h4 {
-        @apply text-sm sm:text-base font-semibold opacity-75;
+        @apply text-sm sm:text-base font-semibold text-white/50;
       }
 
       .address {

@@ -9,8 +9,10 @@ import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from
 import { formatUrl } from 'functions/SocialHelpers'
 import { SocialTwitter, SocialInstagram, SocialTiktok, SocialGithub } from 'components/Socials/SocialLinks'
 
+import { EthereumLogo, BitcoinLogo } from './icons'
+
 export function ProfileCard(props) {
-  if (!props.ens) return null
+  if (!props.ens || props.address == null) return null
 
   const [avatar, setAvatar] = useState(null)
   // profile
@@ -23,6 +25,8 @@ export function ProfileCard(props) {
   const [instagram, setInstagram] = useState(null)
   const [tiktok, setTiktok] = useState(null)
   const [github, setGithub] = useState(null)
+  // addresses
+  const [btcAddress, setBtcAddress] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +57,7 @@ export function ProfileCard(props) {
         setContentHash('')
       }
 
+      // get social links
       resolver.getText('com.twitter').then(result => {
         result ? setTwitter(result) : setTwitter('')
       })
@@ -68,6 +73,11 @@ export function ProfileCard(props) {
       resolver.getText('com.github').then(result => {
         result ? setGithub(result) : setGithub('')
       })
+
+      // get addresses
+      resolver.getAddress(0).then(result => {
+        result ? setBtcAddress(result) : setBtcAddress('')
+      })
     }
 
     fetchData().catch(console.error)
@@ -76,20 +86,20 @@ export function ProfileCard(props) {
   function primaryEnsBadge(ens, primaryEns) {
     if (!primaryEns) {
       return (
-        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-semibold bg-black/20 text-violet-400/25 uppercase">
+        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-black/20 text-violet-400/25 uppercase">
           No Primary ENS
         </span>
       )
     }
     if (ens.toLowerCase() === primaryEns.toLowerCase()) {
       return (
-        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-semibold bg-violet-400 text-black/50 uppercase">
+        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-violet-400 text-black/50 uppercase">
           Primary ENS
         </span>
       )
     }
     return (
-      <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-semibold bg-violet-400 text-black/50">
+      <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-violet-400 text-black/50">
         <Link href={'/' + props.primaryEns}>{props.primaryEns}</Link>
       </span>
     )
@@ -177,16 +187,10 @@ export function ProfileCard(props) {
       <div className="flex flex-col space-y-1.5 leading-snug">
         <Bio />
       </div>
-      
+
       <Socials twitter={twitter} github={github} instagram={instagram} tiktok={tiktok} />
 
-      {/* <Example /> */}
-
-      <H3>addresses</H3>
-      <p className="break-all">
-        <span className="block mt-2 uppercase text-white/50 text-md">ethereum</span>
-        {props.address}
-      </p>
+      <Addresses ethAddress={props.address} btcAddress={btcAddress} />
     </div>
   )
 }
@@ -248,7 +252,7 @@ function Socials(props) {
               {props.twitter == null || props.github == null || props.instagram == null || props.tiktok == null ? (
                 <div>looking for socials</div>
               ) : props.twitter == '' && props.github == '' && props.instagram == '' && props.tiktok == '' ? (
-                <div className="opacity-50">no supported social found</div>
+                <div className="opacity-50">no supported social networks found</div>
               ) : (
                 <div className="social-links">
                   <SocialTwitter social={props.twitter} />
@@ -257,6 +261,73 @@ function Socials(props) {
                   <SocialGithub social={props.github} />
                 </div>
               )}
+            </Disclosure.Panel>
+          </Transition>
+        </>
+      )}
+    </Disclosure>
+  )
+}
+
+function Addresses(props) {
+  return (
+    <Disclosure defaultOpen>
+      {({ open }) => (
+        <>
+          <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
+            <div
+              className={`${
+                open ? 'hidden' : 'bg-black/20'
+              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3`}
+            >
+              addresses
+            </div>
+            <div className="flex justify-between items-center">
+              <h3 className={`${open ? '' : 'opacity-0'} text-4xl text-violet-400 font-light py-3`}>addresses</h3>
+              <ChevronDownIcon
+                className={`${
+                  open ? '-scale-100' : ''
+                } h-8 w-8 opacity-20 group-hover:opacity-100 transition-all duration-300`}
+              />
+            </div>
+          </Disclosure.Button>
+
+          <Transition
+            enter="transition duration-300 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-150 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Disclosure.Panel static as="div" className="leading-none">
+              <ul className="addresses-list">
+                {props.ethAddress == '' && props.btcAddress == '' ? (
+                  <div className="opacity-50">no supported blockchain addresses found</div>
+                ) : null}
+
+                {props.ethAddress != null && props.ethAddress != '' ? (
+                  <li>
+                    <EthereumLogo className="logo" />
+                    <div className="asset">
+                      <h4>ethereum</h4>
+                      <div className="address">{props.ethAddress}</div>
+                    </div>
+                  </li>
+                ) : null}
+
+                {props.btcAddress != null && props.btcAddress != '' ? (
+                  <li>
+                    <BitcoinLogo className="logo" />
+                    <div className="asset">
+                      <h4>bitcoin</h4>
+                      <div className="address">{props.btcAddress}</div>
+                    </div>
+                  </li>
+                ) : null}
+
+                {props.btcAddress == null ? <div>looking for blockchain addresses</div> : null}
+              </ul>
             </Disclosure.Panel>
           </Transition>
         </>
