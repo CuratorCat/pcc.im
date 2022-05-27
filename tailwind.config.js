@@ -11,10 +11,6 @@ module.exports = {
       fontFamily: {
         sans: ['como', ...defaultTheme.fontFamily.sans],
       },
-      colors: {
-        bg1: `#473A74`,
-        bg2: `#251C45`,
-      },
     },
   },
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')],

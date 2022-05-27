@@ -31,6 +31,19 @@ export function Layout({ children }) {
   )
 }
 
+export function LayoutWider({ children }) {
+  return (
+    <>
+      <GlobalHead />
+      <div className="flex flex-col min-h-screen m-auto sm:max-w-3xl sm:min-h-fit overflow-hidden">
+        <Header />
+        <main className="flex flex-1 flex-col rounded-3xl sm:rounded-[36px] min-h-[60vh] p-6 bg-violet-100/10">{children}</main>
+        <Footer />
+      </div>
+    </>
+  )
+}
+
 export function GlobalHead() {
   return (
     <Head>

@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { HomeIcon, RefreshIcon } from '@heroicons/react/solid'
-import { QuestionMarkCircleIcon } from '@heroicons/react/outline'
+import { HomeIcon, RefreshIcon, InformationCircleIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 
 export function Header() {
@@ -33,12 +32,12 @@ export function Header() {
         {currentUrl}
       </div>
       <div className="flex space-x-2">
-        <Link href="/">
+        <Link href="/@about">
           <a
             className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-white bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
             tabIndex={-1}
           >
-            <QuestionMarkCircleIcon className="w-full h-full p-1 sm:p-2" />
+            <InformationCircleIcon className="w-full h-full p-1 sm:p-2" />
           </a>
         </Link>
       </div>
