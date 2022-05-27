@@ -18,8 +18,20 @@ export function isHttpProtocol(string) {
 }
 
 export function formatUrl(url) {
-  if (!url) return null
+  if (!url) return ''
   return isHttpProtocol(url) ? `https://${url.replace(/^https?:\/\//, '')}` : `https://${url}`
+}
+
+export function isTwitterUserUrl(string) {
+  if (!string) return false
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
+  return match ? true : false
+}
+
+export function extractTwitterHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
+  return match ? match[1] : null
 }
 
 export function isInstagramUrl(string) {
@@ -34,15 +46,27 @@ export function extractInstagramHandle(string) {
   return match ? match[1] : null
 }
 
-export function isTwitterUserUrl(string) {
-  if (!string) return false
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
+export function isTiktokUrl(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
   return match ? true : false
 }
 
-export function extractTwitterHandle(string) {
+export function extractTiktokHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
+  return match ? match[1] : null
+}
+
+export function isGithubUserUrl(string) {
+  if (!string) return false
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
+  return match ? true : false
+}
+
+export function extractGithubHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
   return match ? match[1] : null
 }
 
@@ -77,4 +101,30 @@ export function tryInstagramUserUrl(string) {
   if (isInstagramUrl(string)) return `https://instagram.com/${extractInstagramHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
   return `https://instagram.com/${string}`
+}
+
+export function tryTiktokUserHandle(string) {
+  if (!string) return null
+  if (isTiktokUrl(string)) return extractTiktokHandle(string)
+  return `${string}`
+}
+
+export function tryTiktokUserUrl(string) {
+  if (!string) return null
+  if (isTiktokUrl(string)) return `https://tiktok.com/${extractTiktokHandle(string)}`
+  if (isHttpProtocol(string)) return formatUrl(string)
+  return `https://tiktok.com/${string}`
+}
+
+export function tryGithubUserHandle(string) {
+  if (!string) return null
+  if (isGithubUserUrl(string)) return extractGithubHandle(string)
+  return `${string}`
+}
+
+export function tryGithubUserUrl(string) {
+  if (!string) return null
+  if (isGithubUserUrl(string)) return `https://github.com/${extractGithubHandle(string)}`
+  if (isHttpProtocol(string)) return formatUrl(string)
+  return `https://github.com/${string}`
 }

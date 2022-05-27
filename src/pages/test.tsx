@@ -14,7 +14,7 @@ export default function Test() {
     <>
       <Layout>
         {/* head start */}
-        <div className="flex z-40 items-center content-between space-x-2 -ml-6 -mt-6 -mr-6 sm:-ml-4 sm:-mt-4 sm:-mr-4 p-2 sm:p-1 bg-violet-400/25 opacity-0 hover:opacity-100 rounded-none sm:rounded-full transition-all duration-150 backdrop-blur-lg">
+        {/* <div className="flex z-40 items-center content-between space-x-2 -ml-6 -mt-6 -mr-6 sm:-ml-4 sm:-mt-4 sm:-mr-4 p-2 sm:p-1 bg-violet-400/25 opacity-0 hover:opacity-100 rounded-none sm:rounded-full transition-all duration-150 backdrop-blur-lg">
           <div className="flex">
             <Link href="/">
               <div className="flex shrink-0 w-10 rounded-lg sm:rounded-full text-white hover:bg-black/50 cursor-pointer">
@@ -30,36 +30,48 @@ export default function Test() {
           </div>
 
           <div className="grow"></div>
-        </div>
+        </div> */}
         {/* head end */}
 
-        <div className="profile-view z-10 -top-6">
+        <div className="profile-view">
           <h3 className="text-3xl pb-3">purrfile</h3>
-          <div className="flex space-x-4 my-3">
+
+          
+          {/* card head */}
+          <div className="flex items-start space-x-3">
+            
             <div className="flex shrink-0">
               <img
-                src="https://metadata.ens.domains/mainnet/avatar/curatorcat.eth"
+                src="https://pbs.twimg.com/profile_images/1528455697683423237/ZYHWgjPs_400x400.png"
                 className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden"
                 alt=""
               />
             </div>
-            <div className="flex-1 space-y-1.5">
-              <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all">curatorcat.pcc.eth</h2>
-              <div>
-                <p className="inline-block text-xs px-2 py-0.5 font-semibold tracking-wider  rounded-full bg-black/20 text-white/50">
-                curatorcat.pcc.eth
-                </p>
+
+            
+            <div className="flex flex-col space-y-2">
+              <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">
+                curatorcatcuratorcatcuratorcatcuratorcat.pcc.eth
+              </h2>
+
+              <div className="flex space-x-1">
+                <span className="px-2 py-0.5 rounded-full bg-white/10 break-all line-clamp-1 text-xs font-semibold">
+                  <a href="#">.pcuratocuratocuratorcatctcuratorcatpcuratocuratocuratorcatctcuratorcat.pcc.eth</a>
+                </span>
+                <span className="shrink-0">sdsd</span>
               </div>
-              <div>
-                <p className="text-sm text-violet-500 font-semibold tracking-wider">
+
+                <div className="text-sm text-violet-500 font-semibold tracking-wider">
                   0xCCA1····3eeE{' '}
                   <span>
                     <DuplicateIcon className="-mt-1 w-4 h-4 inline-block opacity-75" />
                   </span>
-                </p>
-              </div>
+                </div>
             </div>
+            
+            
           </div>
+
 
           <div className="flex flex-col space-y-1.5 leading-snug">
             <p className="font-medium">
