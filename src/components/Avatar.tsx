@@ -16,8 +16,8 @@ function ImgLoader(ens) {
       
       {loaded ? null : (
         <div className="absolute inset-0">
-          <div className="flex h-full bg-violet-400 rounded-full overflow-hidden">
-            <p className="m-auto text-center animate-pulse">loading</p>
+          <div className="flex h-full bg-violet-400 rounded-full overflow-hidden animate-pulse">
+            <p className="m-auto text-center">loading</p>
           </div>
         </div>
       )}
@@ -31,7 +31,7 @@ export function Avatar(props) {
     return (
       <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden">
         <div className="absolute inset-0">
-          <div className="flex h-full bg-gray-200/50 rounded-full overflow-hidden animate-pulse">
+          <div className="flex h-full bg-violet-400 rounded-full overflow-hidden animate-pulse">
             <div className="m-auto text-center">checking avatar</div>
           </div>
         </div>

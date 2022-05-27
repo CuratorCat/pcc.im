@@ -3,9 +3,8 @@ import { provider } from 'provider'
 import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import { useEffect } from 'react'
-import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
+import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon, ChevronDownIcon } from '@heroicons/react/outline'
 import { formatUrl } from 'functions/SocialHelpers'
 import { SocialTwitter, SocialInstagram, SocialTiktok, SocialGithub } from 'components/Socials/SocialLinks'
 
@@ -108,7 +107,7 @@ export function ProfileCard(props) {
 
   const Bio = () => {
     if (description == null || url == null || email == null || contentHash == null) {
-      return <div className="w-full h-30">looking up ens profile</div>
+      return <div className="w-full py-3 animate-pulse">looking up ens profile</div>
     }
     if (description == '' && url == '' && email == '' && contentHash == '') {
       return null
@@ -226,8 +225,8 @@ function Socials(props) {
           <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
             <div
               className={`${
-                open ? 'hidden' : 'bg-black/20'
-              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3`}
+                open ? 'hidden' : 'bg-black/20 '
+              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3 transition-all duration-500`}
             >
               socials
             </div>
@@ -236,7 +235,7 @@ function Socials(props) {
               <ChevronDownIcon
                 className={`${
                   open ? '-scale-100' : ''
-                } h-8 w-8 opacity-20 group-hover:opacity-100 transition-all duration-300`}
+                } h-8 w-8 text-violet-400/25 group-hover:text-violet-400 transition-all duration-300`}
               />
             </div>
           </Disclosure.Button>
@@ -251,9 +250,9 @@ function Socials(props) {
           >
             <Disclosure.Panel static as="div" className="leading-none">
               {props.twitter == null || props.github == null || props.instagram == null || props.tiktok == null ? (
-                <div>looking for socials</div>
+                <div className="pb-3 animate-pulse">looking for social accounts</div>
               ) : props.twitter == '' && props.github == '' && props.instagram == '' && props.tiktok == '' ? (
-                <div className="opacity-50">no supported social networks found</div>
+                <div className="opacity-50 pb-3">no supported social accounts found</div>
               ) : (
                 <div className="social-links">
                   <SocialTwitter social={props.twitter} />
@@ -278,8 +277,8 @@ function Addresses(props) {
           <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
             <div
               className={`${
-                open ? 'hidden' : 'bg-black/20'
-              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3`}
+                open ? 'hidden' : 'bg-black/20 '
+              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3 transition-all duration-500`}
             >
               addresses
             </div>
@@ -288,7 +287,7 @@ function Addresses(props) {
               <ChevronDownIcon
                 className={`${
                   open ? '-scale-100' : ''
-                } h-8 w-8 opacity-20 group-hover:opacity-100 transition-all duration-300`}
+                } h-8 w-8 text-violet-400/25 group-hover:text-violet-400 transition-all duration-300`}
               />
             </div>
           </Disclosure.Button>
