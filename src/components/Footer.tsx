@@ -1,7 +1,7 @@
 import Link from 'next/link'
 export function Footer() {
   return (
-    <footer className="justify-center px-6 py-6 mt-3 text-sm bg-black/20">
+    <footer className="justify-center p-6 sm:px-1 text-sm">
       <p className="text-white/50 hover:text-white/75">
         <Link href="/">pcc.im</Link> is created by{' '}
         <Link href="/curatorcat.pcc.eth">

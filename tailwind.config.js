@@ -9,11 +9,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['como', ...defaultTheme.fontFamily.sans],
+        sans: ['como', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        bg1: `#473A74`,
+        bg2: `#251C45`,
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 }

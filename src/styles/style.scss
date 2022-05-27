@@ -19,7 +19,7 @@ footer {
 }
 
 .profile-view {
-  @apply relative;
+  @apply relative space-y-3;
   
   a:link {
     @apply hover:underline;
@@ -43,7 +43,7 @@ footer {
 }
 
 .social-links {
-  @apply flex flex-wrap;
+  @apply flex flex-wrap -mt-3;
   a:link {
     @apply flex mr-2 my-1.5 p-1 pr-0.5 bg-white hover:underline rounded-full items-center max-w-full text-sm font-bold md:text-base md:font-semibold;
 
@@ -62,6 +62,32 @@ footer {
       .indicator {
         @apply opacity-100;
       }
+    }
+  }
+}
+
+.addresses-list {
+  @apply flex flex-col space-y-3;
+
+  li {
+    @apply flex space-x-2 items-center;
+    .logo {
+      @apply flex shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full place-items-center items-center text-center align-middle justify-center;
+    }
+    .asset {
+      @apply flex-grow break-all;
+      
+      h4 {
+        @apply text-sm sm:text-base font-semibold opacity-75;
+      }
+
+      .address {
+        @apply text-xs sm:text-sm font-mono;
+      }
+      
+    }
+    .action {
+      @apply shrink-0;
     }
   }
 }

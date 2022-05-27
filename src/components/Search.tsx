@@ -11,12 +11,13 @@ export function Search() {
   }
 
   return (
-    <form onSubmit={handleSubmit} action="." className='mb-6 -mx-6 sm:mx-0'>
+    <form onSubmit={handleSubmit} action="." className='my-6 -mx-6 sm:mx-0'>
       <div className="flex w-full bg-black/25 sm:rounded-2xl px-3 sm:px-1 py-2 sm:py-1 sm:focus-within:scale-110 sm:focus-within:rounded-none focus-within:bg-white text-violet-400/50 focus-within:text-violet-500 transition-all duration-150">
         <div className="flex items-center pl-2 pointer-events-none" onClick={handleSubmit}>
           <SearchIcon className="h-6 w-6" aria-hidden="true" />
         </div>
         <input
+          tabIndex={1}
           id="ens"
           className="flex w-full h-full px-1 py-3 
           bg-transparent

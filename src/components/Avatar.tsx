@@ -7,19 +7,21 @@ function ImgLoader(ens) {
 
   return (
     <div>
-      {loaded ? null : (
-        <div className="absolute inset-0">
-          <div className="flex h-full bg-gray-200/50 rounded-xl overflow-hidden animate-pulse">
-            <div className="m-auto text-center">loading</div>
-          </div>
-        </div>
-      )}
       <img
         src={'https://metadata.ens.domains/mainnet/avatar/' + ens}
         className="absolute w-full h-full rounded-xl overflow-hidden"
         onLoad={() => setLoaded(true)}
         alt=""
       />
+      
+      {loaded ? null : (
+        <div className="absolute inset-0">
+          <div className="flex h-full bg-gray-200 rounded-xl overflow-hidden">
+            <div className="m-auto text-center animate-pulse">loading</div>
+          </div>
+        </div>
+      )}
+      
     </div>
   )
 }
