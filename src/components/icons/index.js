@@ -1,6 +1,8 @@
 module.exports.TwitterLogo = require('./TwitterLogo.js')
+module.exports.DiscordLogo = require('./DiscordLogo.js')
 module.exports.GithubLogo = require('./GithubLogo.js')
 module.exports.InstagramLogo = require('./InstagramLogo.js')
 module.exports.TiktokLogo = require('./TiktokLogo.js')
+module.exports.TelegramLogo = require('./TelegramLogo.js')
 module.exports.EthereumLogo = require('./EthereumLogo.js')
 module.exports.BitcoinLogo = require('./BitcoinLogo.js')

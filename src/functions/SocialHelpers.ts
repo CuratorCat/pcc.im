@@ -40,6 +40,18 @@ export function isInstagramUrl(string) {
   return match ? true : false
 }
 
+export function isTelegramUserUrl(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
+  return match ? true : false
+}
+
+export function extractTelegramHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
+  return match ? match[1] : null
+}
+
 export function extractInstagramHandle(string) {
   if (!string) return null
   const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([A-Za-z0-9-_\.]+)/im)
@@ -127,4 +139,17 @@ export function tryGithubUserUrl(string) {
   if (isGithubUserUrl(string)) return `https://github.com/${extractGithubHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
   return `https://github.com/${string}`
+}
+
+export function tryTelegramUserHandle(string) {
+  if (!string) return null
+  if (isTelegramUserUrl(string)) return extractTelegramHandle(string)
+  return `${string}`
+}
+
+export function tryTelegramUserUrl(string) {
+  if (!string) return null
+  if (isTelegramUserUrl(string)) return `https://t.me/${extractTelegramHandle(string)}`
+  if (isValidUrl(string)) return formatUrl(string)
+  return `https://t.me/${string}`
 }

@@ -63,6 +63,9 @@ footer {
         @apply opacity-100;
       }
     }
+    .indicator-placeholder {
+      @apply inline-block shrink-0 opacity-0 w-3 h-3;
+    }
   }
 }
 

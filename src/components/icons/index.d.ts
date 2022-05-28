@@ -1,6 +1,8 @@
 export { default as TwitterLogo } from './TwitterLogo'
+export { default as DiscordLogo } from './DiscordLogo'
 export { default as GithubLogo } from './GithubLogo'
 export { default as InstagramLogo } from './InstagramLogo'
 export { default as TiktokLogo } from './TiktokLogo'
+export { default as TelegramLogo } from './TelegramLogo'
 export { default as EthereumLogo } from './EthereumLogo'
 export { default as BitcoinLogo } from './BitcoinLogo'

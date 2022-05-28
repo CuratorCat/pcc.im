@@ -1,6 +1,4 @@
-import { Search } from 'components/Search'
 import { LayoutWider } from 'layouts'
-import { ExpoloreEns } from 'components/ExploreEns'
 import Head from 'next/head'
 import Link from 'next/link'
 
@@ -33,9 +31,7 @@ export default function About() {
             <li>
               avatar, description, notice<sup>(x)</sup>, url, email, contentHash<sup>(*)</sup>
             </li>
-            <li>
-              twitter, instagram, tiktok, telegram<sup>(x)</sup>, discord<sup>(x)</sup>, github
-            </li>
+            <li>twitter, instagram, tiktok, telegram, discord, github</li>
           </ul>
           <h4>blockchain addresses</h4>
           <ul>
@@ -67,8 +63,27 @@ export default function About() {
             </Link>
           </p>
           <h4>open-source</h4>
-          <p>not yet. i started this project as experiment, and the code is terrible and buggy</p>
-          <p>i think i'll refactor all the code and open-source someday later</p>
+          <p>
+            i started this project as experiment, and the code is terrible and buggy. i think i'll refactor all the code
+            and open-source someday later.
+          </p>
+          <p>
+            this project mainly uses the following open-source projects:
+            <span>
+              {' '}
+              <Link href="https://github.com/ethers-io/ethers.js">
+                <a target="_blank">ethers.js</a>
+              </Link>
+              ,{' '}
+              <Link href="https://github.com/vercel/next.js">
+                <a target="_blank">next.js</a>
+              </Link>
+              ,{' '}
+              <Link href="https://github.com/tailwindlabs/tailwindcss">
+                <a target="_blank">tailwindcss</a>
+              </Link>
+            </span>
+          </p>
         </article>
       </LayoutWider>
     </>

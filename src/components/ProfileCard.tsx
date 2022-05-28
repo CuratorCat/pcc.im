@@ -4,9 +4,23 @@ import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
 import { Disclosure, Transition } from '@headlessui/react'
 import { useEffect } from 'react'
-import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon, ChevronDownIcon } from '@heroicons/react/outline'
+import {
+  DuplicateIcon,
+  LinkIcon,
+  MailIcon,
+  HashtagIcon,
+  ExternalLinkIcon,
+  ChevronDownIcon,
+} from '@heroicons/react/outline'
 import { formatUrl } from 'functions/SocialHelpers'
-import { SocialTwitter, SocialInstagram, SocialTiktok, SocialGithub } from 'components/Socials/SocialLinks'
+import {
+  SocialTwitter,
+  SocialInstagram,
+  SocialTiktok,
+  SocialGithub,
+  SocialDiscord,
+  SocialTelegram,
+} from 'components/Socials/SocialLinks'
 
 import { EthereumLogo, BitcoinLogo } from './icons'
 
@@ -23,6 +37,8 @@ export function ProfileCard(props) {
   const [twitter, setTwitter] = useState(null)
   const [instagram, setInstagram] = useState(null)
   const [tiktok, setTiktok] = useState(null)
+  const [discord, setDiscord] = useState(null)
+  const [telegram, setTelegram] = useState(null)
   const [github, setGithub] = useState(null)
   // addresses
   const [btcAddress, setBtcAddress] = useState(null)
@@ -67,6 +83,14 @@ export function ProfileCard(props) {
 
       resolver.getText('com.tiktok').then(result => {
         result ? setTiktok(result) : setTiktok('')
+      })
+
+      resolver.getText('com.discord').then(result => {
+        result ? setDiscord(result) : setDiscord('')
+      })
+
+      resolver.getText('org.telegram').then(result => {
+        result ? setTelegram(result) : setTelegram('')
       })
 
       resolver.getText('com.github').then(result => {
@@ -161,7 +185,7 @@ export function ProfileCard(props) {
   }
 
   return (
-    <div className="profile-view">
+    <>
       <H3> {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
 
       {/* card head */}
@@ -172,7 +196,7 @@ export function ProfileCard(props) {
         </div>
 
         {/* account */}
-        <div className="flex flex-col space-y-1.5 sm:space-y-2">
+        <div className="flex flex-1 flex-col space-y-1.5 sm:space-y-2">
           {/* ens */}
           <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">{props.ens}</h2>
 
@@ -188,14 +212,19 @@ export function ProfileCard(props) {
         <Bio />
       </div>
 
-      <Socials twitter={twitter} github={github} instagram={instagram} tiktok={tiktok} />
+      <Socials
+        twitter={twitter}
+        github={github}
+        instagram={instagram}
+        tiktok={tiktok}
+        telegram={telegram}
+        discord={discord}
+      />
 
       <Addresses ethAddress={props.address} btcAddress={btcAddress} />
-    </div>
+    </>
   )
 }
-
-const looking = <span className="inline-block animate-bounce">👀</span>
 
 function H3({ children }) {
   return (
@@ -218,20 +247,32 @@ function shortenAddress(address) {
 }
 
 function Socials(props) {
+  if (props.twitter == null || props.github == null || props.instagram == null || props.tiktok == null || props.discord == null || props.telegram == null) {
+    return (
+      <div className="relative w-full mx-0 group">
+        <div className="flex justify-between items-center ">
+          <h3 className="text-4xl text-violet-400 font-light py-1 transition-all duration-300">socials</h3>
+          <div className="mr-3 h-2 w-2 bg-violet-400 rounded-full animate-ping" />
+        </div>
+      </div>
+    )
+  }
+
+  if (props.twitter == '' && props.github == '' && props.instagram == '' && props.tiktok == '' && props.discord == '' && props.telegram == '') return null
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
         <>
           <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
-            <div
-              className={`${
-                open ? 'hidden' : 'bg-black/20 '
-              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3 transition-all duration-500`}
-            >
-              socials
-            </div>
-            <div className="flex justify-between items-center">
-              <h3 className={`${open ? '' : 'opacity-0'} text-4xl text-violet-400 font-light py-3`}>socials</h3>
+            <div className="flex justify-between items-center ">
+              <h3
+                className={`${
+                  open ? '' : 'opacity-50 group-hover:opacity-100'
+                } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
+              >
+                socials
+              </h3>
               <ChevronDownIcon
                 className={`${
                   open ? '-scale-100' : ''
@@ -258,6 +299,8 @@ function Socials(props) {
                   <SocialTwitter social={props.twitter} />
                   <SocialInstagram social={props.instagram} />
                   <SocialTiktok social={props.tiktok} />
+                  <SocialDiscord social={props.discord} />
+                  <SocialTelegram social={props.telegram} />
                   <SocialGithub social={props.github} />
                 </div>
               )}
@@ -270,20 +313,32 @@ function Socials(props) {
 }
 
 function Addresses(props) {
+  if (props.ethAddress == null || props.btcAddress == null) {
+    return (
+      <div className="relative w-full mx-0 group">
+        <div className="flex justify-between items-center ">
+          <h3 className="text-4xl text-violet-400 font-light py-1 transition-all duration-300">addresses</h3>
+          <div className="mr-3 h-2 w-2 bg-violet-400 rounded-full animate-ping" />
+        </div>
+      </div>
+    )
+  }
+
+  if (props.ethAddress == '' && props.btcAddress == '') return null
+
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
         <>
           <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
-            <div
-              className={`${
-                open ? 'hidden' : 'bg-black/20 '
-              } absolute inset-0 z-20 rounded-2xl -mx-3 text-4xl text-violet-400 font-light py-3 text-left px-3 transition-all duration-500`}
-            >
-              addresses
-            </div>
-            <div className="flex justify-between items-center">
-              <h3 className={`${open ? '' : 'opacity-0'} text-4xl text-violet-400 font-light py-3`}>addresses</h3>
+            <div className="flex justify-between items-center ">
+              <h3
+                className={`${
+                  open ? '' : 'opacity-50 group-hover:opacity-100'
+                } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
+              >
+                addresses
+              </h3>
               <ChevronDownIcon
                 className={`${
                   open ? '-scale-100' : ''
