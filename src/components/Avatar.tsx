@@ -19,7 +19,7 @@ function ImgLoader(ens) {
       {loaded ? null : (
         // loading image
         <div className="absolute inset-0">
-          <div className="flex h-full bg-black/50 rounded-full overflow-hidden backdrop-blur-sm">
+          <div className="flex h-full bg-black/25 rounded-full overflow-hidden backdrop-blur-sm">
             <p className="m-auto text-center">
               <CloudIcon className="w-8 h-8 text-violet-400/50 animate-pulse" />
             </p>
