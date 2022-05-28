@@ -43,9 +43,9 @@ footer {
 }
 
 .social-links {
-  @apply flex flex-wrap -mt-3;
+  @apply flex flex-wrap;
   a:link {
-    @apply flex mr-2 my-1.5 p-1 pr-0.5 bg-white hover:underline rounded-full items-center max-w-full text-sm font-bold md:text-base md:font-semibold;
+    @apply flex mr-2 my-1.5 md:mr-3 md:my-2 p-1 pr-0.5 bg-white hover:underline rounded-full items-center max-w-full text-sm font-bold md:text-base md:font-semibold;
 
     .social-logo {
       @apply inline-block shrink-0 w-5 h-5 md:w-6 md:h-6 mr-1;

@@ -247,7 +247,14 @@ function shortenAddress(address) {
 }
 
 function Socials(props) {
-  if (props.twitter == null || props.github == null || props.instagram == null || props.tiktok == null || props.discord == null || props.telegram == null) {
+  if (
+    props.twitter == null ||
+    props.github == null ||
+    props.instagram == null ||
+    props.tiktok == null ||
+    props.discord == null ||
+    props.telegram == null
+  ) {
     return (
       <div className="relative w-full mx-0 group">
         <div className="flex justify-between items-center ">
@@ -258,7 +265,15 @@ function Socials(props) {
     )
   }
 
-  if (props.twitter == '' && props.github == '' && props.instagram == '' && props.tiktok == '' && props.discord == '' && props.telegram == '') return null
+  if (
+    props.twitter == '' &&
+    props.github == '' &&
+    props.instagram == '' &&
+    props.tiktok == '' &&
+    props.discord == '' &&
+    props.telegram == ''
+  )
+    return null
 
   return (
     <Disclosure defaultOpen>
@@ -290,20 +305,14 @@ function Socials(props) {
             leaveTo="transform scale-95 opacity-0"
           >
             <Disclosure.Panel static as="div" className="leading-none">
-              {props.twitter == null || props.github == null || props.instagram == null || props.tiktok == null ? (
-                <div className="pb-3 animate-pulse">looking for social accounts</div>
-              ) : props.twitter == '' && props.github == '' && props.instagram == '' && props.tiktok == '' ? (
-                <div className="opacity-50 pb-3">no supported social accounts found</div>
-              ) : (
-                <div className="social-links">
-                  <SocialTwitter social={props.twitter} />
-                  <SocialInstagram social={props.instagram} />
-                  <SocialTiktok social={props.tiktok} />
-                  <SocialDiscord social={props.discord} />
-                  <SocialTelegram social={props.telegram} />
-                  <SocialGithub social={props.github} />
-                </div>
-              )}
+              <div className="social-links">
+                <SocialTwitter social={props.twitter} />
+                <SocialInstagram social={props.instagram} />
+                <SocialTiktok social={props.tiktok} />
+                <SocialDiscord social={props.discord} />
+                <SocialTelegram social={props.telegram} />
+                <SocialGithub social={props.github} />
+              </div>
             </Disclosure.Panel>
           </Transition>
         </>
