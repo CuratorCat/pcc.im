@@ -1,9 +1,11 @@
+
+import { CloudIcon, StatusOnlineIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 
 
 function ImgLoader(ens) {
+  if (!ens) return null
   const [loaded, setLoaded] = useState(false)
-  // console.log("src", ens)
 
   return (
     <>
@@ -15,9 +17,12 @@ function ImgLoader(ens) {
       />
       
       {loaded ? null : (
+        // loading image
         <div className="absolute inset-0">
-          <div className="flex h-full bg-violet-400 rounded-full overflow-hidden animate-pulse">
-            <p className="m-auto text-center">loading</p>
+          <div className="flex h-full bg-black/50 rounded-full overflow-hidden backdrop-blur-sm">
+            <p className="m-auto text-center">
+              <CloudIcon className="w-8 h-8 text-violet-400/50 animate-pulse" />
+            </p>
           </div>
         </div>
       )}
@@ -31,8 +36,10 @@ export function Avatar(props) {
     return (
       <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden">
         <div className="absolute inset-0">
-          <div className="flex h-full bg-violet-400 rounded-full overflow-hidden animate-pulse">
-            <div className="m-auto text-center">checking avatar</div>
+          <div className="flex h-full bg-violet-400/50 rounded-full overflow-hidden backdrop-blur-sm">
+            <p className="m-auto text-center">
+              <CloudIcon className="w-8 h-8 text-violet-400/50 animate-pulse" />
+            </p>
           </div>
         </div>
       </div>
@@ -42,7 +49,7 @@ export function Avatar(props) {
       <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden">
         <div className="absolute inset-0">
           <div className="flex h-full bg-black/20">
-            <div className="m-auto text-center p-3 text-white/50">no avatar</div>
+            <div className="m-auto text-center p-3 text-violet-400/25 font-semibold">no avatar</div>
           </div>
         </div>
       </div>
