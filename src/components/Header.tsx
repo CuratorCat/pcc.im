@@ -11,7 +11,7 @@ export function Header() {
       <div className="flex space-x-2">
         <Link href="/">
           <a
-            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-white bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
+            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-violet-400 bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
             tabIndex={-1}
           >
             <HomeIcon className="w-full h-full p-1.5 sm:p-2.5 " />
@@ -20,7 +20,7 @@ export function Header() {
 
         <Link href="#">
           <a
-            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-white bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
+            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-violet-400 bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
             onClick={() => router.reload()}
             tabIndex={-1}
           >
@@ -34,7 +34,7 @@ export function Header() {
       <div className="flex space-x-2">
         <Link href="/@about">
           <a
-            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-white bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
+            className="flex shrink-0 w-8 sm:w-10 rounded-2xl text-violet-100/20 hover:text-violet-400 bg-violet-100/0 hover:bg-violet-100/10 cursor-pointer transition-all duration-300"
             tabIndex={-1}
           >
             <InformationCircleIcon className="w-full h-full p-1 sm:p-2" />
