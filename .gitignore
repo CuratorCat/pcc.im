@@ -4,6 +4,7 @@
 # Production
 /build
 /.next
+/out
 
 # Misc
 .DS_Store
@@ -17,3 +18,8 @@ yarn-debug.log*
 yarn-error.log*
 /local
 /src/pages/@/
+
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map

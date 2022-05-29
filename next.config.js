@@ -1,10 +1,13 @@
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = {
-  env: {
+ const withPWA = require('next-pwa')
+
+ module.exports = withPWA({
+   pwa: {
+     dest: 'public'
+   },
+   env: {
     infuraKey: process.env.INFURA_KEY,
   },
-}
-
-module.exports = nextConfig
+ })
