@@ -13,9 +13,11 @@ export default function About() {
           <h1>about pcc.im</h1>
           <h3>what is pcc.im</h3>
           <p>
-            pcc.im is a service to showcase public ens profiles. it is built by curatorcat.pcc.eth for fun. it is
-            currently in alpha and may not work well, some features may broke.
+            pcc.im is a service to showcase public ens profiles. it is built by{' '}
+            <Link href="/curatorcat.pcc.eth">curatorcat.pcc.eth</Link> for fun, and it is not affiliated with
+            purrnelope's country club project.
           </p>
+          <p>it is currently in alpha and may not work well, some features may broke.</p>
           <h3>supported features</h3>
           <h4>ens names</h4>
           <ul>
@@ -50,9 +52,9 @@ export default function About() {
           <h4>operation</h4>
           <p>no plan yet, but should be able to operate as it is now for quite a long time</p>
           <h4>features</h4>
-          <p>maybe a new app to manage ens profile</p>
+          <p>maybe another app to manage ens profile with custom resolvers, start with .pcc.eth's ensmapper?</p>
           <p>
-            maybe new features heavily related to purrnelope's country club project, it's my favorite nft project. check
+            maybe new features heavily related to purrnelope's country club project. it's my favorite nft project, check
             their website at{' '}
             <Link href="https://purrnelopescountryclub.com">
               <a target="_blank">purrnelopescountryclub.com</a>
