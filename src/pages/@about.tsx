@@ -37,9 +37,7 @@ export default function About() {
           </ul>
           <h4>blockchain addresses</h4>
           <ul>
-            <li>
-              ethereum, bitcoin<sup>(x)</sup>
-            </li>
+            <li>ethereum, bitcoin</li>
           </ul>
           <p>
             <em>(*): features may not work properly in some cases</em>
