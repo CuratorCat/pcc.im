@@ -2,27 +2,13 @@ import { useState } from 'react'
 import { provider } from 'provider'
 import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
-import { Disclosure, Transition } from '@headlessui/react'
 import { useEffect } from 'react'
-import {
-  DuplicateIcon,
-  LinkIcon,
-  MailIcon,
-  HashtagIcon,
-  ExternalLinkIcon,
-  ChevronDownIcon,
-} from '@heroicons/react/outline'
+import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
 import { formatUrl } from 'functions/SocialHelpers'
-import {
-  SocialTwitter,
-  SocialInstagram,
-  SocialTiktok,
-  SocialGithub,
-  SocialDiscord,
-  SocialTelegram,
-} from 'components/Socials/SocialLinks'
-
-import { EthereumLogo, BitcoinLogo } from './icons'
+import Socials from 'components/Socials'
+import Addresses from 'components/Addresses'
+import EnsBadge from './Profile/EnsBadge'
+import { shortenAddress } from 'functions/AddressHelpers'
 
 export function ProfileCard(props) {
   if (!props.ens || props.address == null) return null
@@ -107,27 +93,7 @@ export function ProfileCard(props) {
     fetchData().catch(console.error)
   }, [])
 
-  function primaryEnsBadge(ens, primaryEns) {
-    if (!primaryEns) {
-      return (
-        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-black/20 text-violet-400/25 uppercase">
-          No Primary ENS
-        </span>
-      )
-    }
-    if (ens.toLowerCase() === primaryEns.toLowerCase()) {
-      return (
-        <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-violet-400 text-black/50 uppercase">
-          Primary ENS
-        </span>
-      )
-    }
-    return (
-      <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-violet-400 text-black/50">
-        <Link href={'/' + props.primaryEns}>{props.primaryEns}</Link>
-      </span>
-    )
-  }
+  
 
   const Bio = () => {
     if (description == null || url == null || email == null || contentHash == null) {
@@ -201,10 +167,10 @@ export function ProfileCard(props) {
           <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">{props.ens}</h2>
 
           {/* ens badge */}
-          <div className="flex space-x-1">{primaryEnsBadge(props.ens, props.primaryEns)}</div>
+          <div className="flex space-x-1">{EnsBadge(props.ens, props.primaryEns)}</div>
 
           {/* address */}
-          {shortenAddress(props.address)}
+          {ProfileAddress(props.address)}
         </div>
       </div>
 
@@ -234,168 +200,14 @@ function H3({ children }) {
   )
 }
 
-function shortenAddress(address) {
+function ProfileAddress(address) {
   if (!address || address === '') return null
   return (
     <div className="text-sm text-violet-400 font-semibold tracking-wider">
-      <span>{address.substring(0, 6) + '···' + address.substring(address.length - 4)}</span>
+      <span>{shortenAddress(address)}</span>
       <span className="hidden">
         <DuplicateIcon className="-mt-1 ml-1 w-4 h-4 inline-block opacity-75" />
       </span>
     </div>
-  )
-}
-
-function Socials(props) {
-  if (
-    props.twitter == null ||
-    props.github == null ||
-    props.instagram == null ||
-    props.tiktok == null ||
-    props.discord == null ||
-    props.telegram == null
-  ) {
-    return (
-      <div className="relative w-full mx-0 group">
-        <div className="flex justify-between items-center ">
-          <h3 className="text-4xl text-violet-400 font-light py-1 transition-all duration-300">socials</h3>
-          <div className="mr-3 h-2 w-2 bg-violet-400 rounded-full animate-ping" />
-        </div>
-      </div>
-    )
-  }
-
-  if (
-    props.twitter == '' &&
-    props.github == '' &&
-    props.instagram == '' &&
-    props.tiktok == '' &&
-    props.discord == '' &&
-    props.telegram == ''
-  )
-    return null
-
-  return (
-    <Disclosure defaultOpen>
-      {({ open }) => (
-        <>
-          <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
-            <div className="flex justify-between items-center ">
-              <h3
-                className={`${
-                  open ? '' : 'opacity-50 group-hover:opacity-100'
-                } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
-              >
-                socials
-              </h3>
-              <ChevronDownIcon
-                className={`${
-                  open ? '-scale-100' : ''
-                } h-8 w-8 text-violet-400/25 group-hover:text-violet-400 transition-all duration-300`}
-              />
-            </div>
-          </Disclosure.Button>
-
-          <Transition
-            enter="transition duration-300 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-150 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <Disclosure.Panel static as="div" className="leading-none">
-              <div className="social-links">
-                <SocialTwitter social={props.twitter} />
-                <SocialInstagram social={props.instagram} />
-                <SocialTiktok social={props.tiktok} />
-                <SocialDiscord social={props.discord} />
-                <SocialTelegram social={props.telegram} />
-                <SocialGithub social={props.github} />
-              </div>
-            </Disclosure.Panel>
-          </Transition>
-        </>
-      )}
-    </Disclosure>
-  )
-}
-
-function Addresses(props) {
-  if (props.ethAddress == null || props.btcAddress == null) {
-    return (
-      <div className="relative w-full mx-0 group">
-        <div className="flex justify-between items-center ">
-          <h3 className="text-4xl text-violet-400 font-light py-1 transition-all duration-300">addresses</h3>
-          <div className="mr-3 h-2 w-2 bg-violet-400 rounded-full animate-ping" />
-        </div>
-      </div>
-    )
-  }
-
-  if (props.ethAddress == '' && props.btcAddress == '') return null
-
-  return (
-    <Disclosure defaultOpen>
-      {({ open }) => (
-        <>
-          <Disclosure.Button className="relative w-full mx-0 cursor-pointer group">
-            <div className="flex justify-between items-center ">
-              <h3
-                className={`${
-                  open ? '' : 'opacity-50 group-hover:opacity-100'
-                } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
-              >
-                addresses
-              </h3>
-              <ChevronDownIcon
-                className={`${
-                  open ? '-scale-100' : ''
-                } h-8 w-8 text-violet-400/25 group-hover:text-violet-400 transition-all duration-300`}
-              />
-            </div>
-          </Disclosure.Button>
-
-          <Transition
-            enter="transition duration-300 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-150 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <Disclosure.Panel static as="div" className="leading-none">
-              <ul className="addresses-list">
-                {props.ethAddress == '' && props.btcAddress == '' ? (
-                  <div className="opacity-50">no supported blockchain addresses found</div>
-                ) : null}
-
-                {props.ethAddress != null && props.ethAddress != '' ? (
-                  <li>
-                    <EthereumLogo className="logo" />
-                    <div className="asset">
-                      <h4>ethereum</h4>
-                      <div className="address">{props.ethAddress}</div>
-                    </div>
-                  </li>
-                ) : null}
-
-                {props.btcAddress != null && props.btcAddress != '' ? (
-                  <li>
-                    <BitcoinLogo className="logo" />
-                    <div className="asset">
-                      <h4>bitcoin</h4>
-                      <div className="address">{props.btcAddress}</div>
-                    </div>
-                  </li>
-                ) : null}
-
-                {props.btcAddress == null ? <div>looking for blockchain addresses</div> : null}
-              </ul>
-            </Disclosure.Panel>
-          </Transition>
-        </>
-      )}
-    </Disclosure>
   )
 }

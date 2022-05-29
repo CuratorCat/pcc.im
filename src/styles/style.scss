@@ -20,7 +20,7 @@ footer {
 
 .profile-view {
   @apply relative space-y-3;
-  
+
   a:link {
     @apply hover:underline;
   }
@@ -73,21 +73,20 @@ footer {
   @apply flex flex-col space-y-3;
 
   li {
-    @apply flex space-x-2 items-center;
+    @apply flex space-x-2 items-center bg-violet-400/10 rounded-2xl p-2;
     .logo {
-      @apply flex shrink-0 w-10 h-10 rounded-full place-items-center items-center text-center align-middle justify-center;
+      @apply flex shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full place-items-center items-center text-center align-middle justify-center;
     }
     .asset {
       @apply flex-grow break-all;
-      
+
       h4 {
-        @apply text-sm sm:text-base font-semibold text-white/50;
+        @apply text-sm sm:text-base font-semibold text-white/50 hidden;
       }
 
       .address {
-        @apply text-xs sm:text-sm font-mono;
+        @apply text-sm font-semibold leading-tight;
       }
-      
     }
     .action {
       @apply shrink-0;
