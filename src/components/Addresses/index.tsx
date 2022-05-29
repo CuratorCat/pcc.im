@@ -1,6 +1,7 @@
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon, DuplicateIcon } from '@heroicons/react/outline'
 import { EthereumLogo, BitcoinLogo } from 'components/icons'
+import { CopyToClipboard } from 'components/CopyToClipboard'
 
 export default function Addresses(props) {
   if (props.ethAddress == null || props.btcAddress == null) {
@@ -58,6 +59,11 @@ export default function Addresses(props) {
                       <h4>ethereum</h4>
                       <div className="address">{props.ethAddress}</div>
                     </div>
+                    <div>
+                      <CopyToClipboard copyText={props.ethAddress}>
+                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400" />
+                      </CopyToClipboard>
+                    </div>
                   </li>
                 ) : null}
 
@@ -67,6 +73,11 @@ export default function Addresses(props) {
                     <div className="asset">
                       <h4>bitcoin</h4>
                       <div className="address">{props.btcAddress}</div>
+                    </div>
+                    <div>
+                      <CopyToClipboard copyText={props.btcAddress}>
+                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400" />
+                      </CopyToClipboard>
                     </div>
                   </li>
                 ) : null}

@@ -9,6 +9,7 @@ import Socials from 'components/Socials'
 import Addresses from 'components/Addresses'
 import EnsBadge from './Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
+import { CopyToClipboard } from './CopyToClipboard'
 
 export function ProfileCard(props) {
   if (!props.ens || props.address == null) return null
@@ -92,8 +93,6 @@ export function ProfileCard(props) {
 
     fetchData().catch(console.error)
   }, [])
-
-  
 
   const Bio = () => {
     if (description == null || url == null || email == null || contentHash == null) {
@@ -204,10 +203,12 @@ function ProfileAddress(address) {
   if (!address || address === '') return null
   return (
     <div className="text-sm text-violet-400 font-semibold tracking-wider">
-      <span>{shortenAddress(address)}</span>
-      <span className="hidden">
-        <DuplicateIcon className="-mt-1 ml-1 w-4 h-4 inline-block opacity-75" />
-      </span>
+      <CopyToClipboard copyText={address}>
+        <span className="hover:cursor-pointer group">
+          {shortenAddress(address)}
+          <DuplicateIcon className="-mt-1 ml-1 w-4 h-4 inline-block opacity-25 hover:opacity-100 group-hover:opacity-100" />
+        </span>
+      </CopyToClipboard>
     </div>
   )
 }

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import 'fonts.scss';
+@import 'react-toastify/dist/ReactToastify.css';
 
 html,
 body {
@@ -92,4 +93,8 @@ footer {
       @apply shrink-0;
     }
   }
+}
+
+.Toastify__close-button, .Toastify__close-button--light {
+  display: none !important;
 }

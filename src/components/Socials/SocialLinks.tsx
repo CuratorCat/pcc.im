@@ -14,8 +14,9 @@ import {
   tryTelegramUserUrl,
   tryTelegramUserHandle,
 } from 'functions/SocialHelpers'
+import { CopyToClipboard } from 'components/CopyToClipboard'
 
-import { ExternalLinkIcon } from '@heroicons/react/outline'
+import { ExternalLinkIcon, DuplicateIcon } from '@heroicons/react/outline'
 import { TelegramLogo } from 'components/icons'
 
 export function SocialTwitter(props) {
@@ -57,17 +58,19 @@ export function SocialDiscord(props) {
       </Link>
     )
   return (
-    <a
-      href="#"
-      onClick={e => {
-        e.preventDefault()
-      }}
-      className="text-indigo-600"
-    >
-      <DiscordLogo className="social-logo" />
-      <span>{props.social}</span>
-      <ExternalLinkIcon className="indicator-placeholder" />
-    </a>
+    <CopyToClipboard copyText={props.social}>
+      <a
+        href="#"
+        onClick={e => {
+          e.preventDefault()
+        }}
+        className="text-indigo-600"
+      >
+        <DiscordLogo className="social-logo" />
+        <span>{props.social}</span>
+        <DuplicateIcon className="indicator" />
+      </a>
+    </CopyToClipboard>
   )
 }
 
