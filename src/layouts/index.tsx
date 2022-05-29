@@ -35,7 +35,7 @@ export function Layout({ children }) {
       <ToastContainer
         toastClassName={({ type }) =>
           toastClass[type || 'default'] +
-          ' relative flex p-3 rounded-xl text-center mx-6 sm:mx-auto mt-6 justify-between break-words break-all overflow-hidden cursor-pointer leading-tight'
+          ' relative text-sm font-semibold flex p-3 rounded-xl text-center mx-6 sm:mx-auto mt-6 justify-between break-words break-all overflow-hidden cursor-pointer leading-tight'
         }
       />
       <div className="flex flex-col min-h-screen m-auto sm:max-w-lg sm:min-h-fit overflow-hidden">

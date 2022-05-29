@@ -51,13 +51,15 @@ export function ProfileCard(props) {
       })
 
       // get contentHash
-      if (!props.ens.endsWith('.pcc.eth')) {
-        resolver.getContentHash().then(result => {
+      resolver
+        .getContentHash()
+        .then(result => {
           result ? setContentHash(result) : setContentHash('')
         })
-      } else {
-        setContentHash('')
-      }
+        .catch(e => {
+          setContentHash('')
+          console.log(e)
+        })
 
       // get social links
       resolver.getText('com.twitter').then(result => {
@@ -85,10 +87,15 @@ export function ProfileCard(props) {
       })
 
       // get addresses
-      // resolver.getAddress(0).then(result => {
-      //   result ? setBtcAddress(result) : setBtcAddress('')
-      // })
-      setBtcAddress('')
+      resolver
+        .getAddress(0)
+        .then(result => {
+          result ? setBtcAddress(result) : setBtcAddress('')
+        })
+        .catch(e => {
+          setBtcAddress('')
+          console.log(e)
+        })
     }
 
     fetchData().catch(console.error)

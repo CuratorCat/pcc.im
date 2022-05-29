@@ -4,6 +4,7 @@ import { ProfileCard } from './ProfileCard'
 import { provider } from 'provider'
 import { Search } from './Search'
 import { ExpoloreEns } from './ExploreEns'
+import Head from 'next/head'
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState(null)
@@ -91,23 +92,31 @@ export function QueryAccountView(props) {
 
   if (!proceed) {
     return (
-      <div className="profile-view">
-        <div className="text-xl">
-          <h3 className="text-3xl animate-bounce">looking up</h3>
-          <p className="font-light break-all text-4xl">{props.address + props.ens}</p>
-          <p>on blockchain</p>
+      <>
+        <Head>
+          <title>looking up {props.address + props.ens} - pcc.im</title>
+        </Head>
+        <div className="profile-view">
+          <div className="text-xl">
+            <h3 className="text-3xl animate-bounce">looking up</h3>
+            <p className="font-light break-all text-4xl">{props.address + props.ens}</p>
+            <p>on blockchain</p>
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 
   if (ens === null) {
     return (
       <>
+        <Head>
+          <title>404: {props.address + props.ens} - pcc.im</title>
+        </Head>
         <h3 className="text-3xl break-all">
           can not found ens profile for
-          <p className='text-2xl font-semibold '>
-          {props.address} {props.ens}
+          <p className="text-2xl font-semibold ">
+            {props.address} {props.ens}
           </p>
         </h3>
         <Search />
@@ -116,9 +125,14 @@ export function QueryAccountView(props) {
     )
   } else {
     return (
-      <div className="profile-view">
-        <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
-      </div>
+      <>
+        <Head>
+          <title>{ens} ens profile - pcc.im</title>
+        </Head>
+        <div className="profile-view">
+          <ProfileCard address={address} ens={ens} primaryEns={primaryEns} />
+        </div>
+      </>
     )
   }
 }

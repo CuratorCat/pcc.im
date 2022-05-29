@@ -7,9 +7,7 @@ export function Avatar(props) {
       <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden">
         <div className="absolute inset-0">
           <div className="flex h-full bg-black/20 rounded-full overflow-hidden backdrop-blur-sm">
-            <p className="m-auto text-center">
-              <div className="h-4 w-4 bg-violet-400 rounded-full animate-ping" />
-            </p>
+              <div className="h-4 w-4 m-auto bg-violet-400 rounded-full animate-ping" />
           </div>
         </div>
       </div>
