@@ -13,15 +13,18 @@ function EthereumLogo(props, svgRef) {
       },
       props
     ),
-    <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-      <circle id="Oval" fill="#FFFFFF00" cx="10" cy="10" r="10"></circle>
-      <polygon id="Fill-4" fill="#63688F" points="10.3735045 0.999994669 10.3735045 7.65250293 15.9962725 10.1649947"></polygon>
-      <polygon id="Fill-6" fill="#8A93B2" points="10.3735045 0.999994669 4.75001487 10.1649947 10.3735045 7.65250293"></polygon>
-      <polygon id="Fill-8" fill="#63688F" points="10.3735045 14.4760045 10.3735045 18.996272 16.0000123 11.2119992"></polygon>
-      <polygon id="Fill-10" fill="#8A93B2" points="10.3735045 18.9962589 10.3735045 14.4752696 4.75001487 11.2120189"></polygon>
-      <polygon id="Fill-12" fill="#464A76" points="10.3735045 13.4297545 15.9962725 10.1649947 10.3735045 7.654012"></polygon>
-      <polygon id="Fill-14" fill="#63688F" points="4.74999846 10.1650013 10.3734881 13.4297611 10.3734881 7.65398575"></polygon>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <circle id="Oval" fill="#FFFFFF" cx="10" cy="10" r="10"></circle>
+      <g transform="translate(5.000000, 2.000000)">
+          <polygon id="Fill-4" fill="#63688F" points="4.9986659 0 4.9986659 5.91456389 9.99667569 8.14835191"></polygon>
+          <polygon id="Fill-6" fill="#8A93B2" points="4.9986659 0 1.45802987e-05 8.14835191 4.9986659 5.91456389"></polygon>
+          <polygon id="Fill-8" fill="#63688F" points="4.9986659 11.9811532 4.9986659 16 10 9.07921504"></polygon>
+          <polygon id="Fill-10" fill="#8A93B2" points="4.9986659 15.9999883 4.9986659 11.9804999 1.45802987e-05 9.07923254"></polygon>
+          <polygon id="Fill-12" fill="#464A76" points="4.9986659 11.0509609 9.99667569 8.14835191 4.9986659 5.91590555"></polygon>
+          <polygon id="Fill-14" fill="#63688F" points="0 8.14835774 4.99865132 11.0509668 4.99865132 5.91588222"></polygon>
+      </g>
     </g>
+    
   )
 }
 

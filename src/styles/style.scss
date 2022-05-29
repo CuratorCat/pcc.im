@@ -73,7 +73,7 @@ footer {
   @apply flex flex-col space-y-3;
 
   li {
-    @apply flex space-x-2 items-center bg-violet-400/10 rounded-2xl p-2;
+    @apply flex space-x-2 items-center bg-violet-400/20 rounded-2xl p-2;
     .logo {
       @apply flex shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full place-items-center items-center text-center align-middle justify-center;
     }
