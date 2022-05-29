@@ -15,14 +15,11 @@ function App({ Component, pageProps }: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
 
-        <meta name="description" content="show your ens profile" />
-        <meta name="keywords" content="pcc.im, ens" />
-        <title>pcc.im</title>
-
-        <meta name="application-name" content="pcc.im" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="pcc.im" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="pcc.im" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#251C45" />
 
@@ -37,6 +34,10 @@ function App({ Component, pageProps }: AppProps) {
         <meta property="og:site_name" content="pcc.im" />
         <meta property="og:url" content="https://pcc.im" />
         <meta property="og:image" content="https://pcc.im//icons/icon-512x512.png" />
+
+        <meta name="description" content="show your ens profile" />
+        <meta name="keywords" content="pcc.im, ens" />
+        <title>pcc.im</title>
       </Head>
       <Component key={router.asPath} {...pageProps} />
     </>
