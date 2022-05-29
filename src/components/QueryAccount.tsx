@@ -5,18 +5,28 @@ import { provider } from 'provider'
 import { Search } from './Search'
 import { ExpoloreEns } from './ExploreEns'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 export function QueryAccountView(props) {
   const [address, setAddress] = useState(null)
   const [ens, setEns] = useState(null)
   const [primaryEns, setPrimaryEns] = useState(null)
   const [proceed, setProceed] = useState(false)
+  const router = useRouter()
 
   if (!props.address && !props.ens) {
     return null
   }
 
   useEffect(() => {
+    console.log('ws', provider.websocket.readyState)
+
+    setTimeout(() => {
+      if (provider.websocket.readyState != 1) {
+        router.reload()
+      }
+    }, 5000)
+
     console.log('🛠😺')
     // address
     if (props.address) {
