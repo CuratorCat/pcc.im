@@ -7,7 +7,7 @@ export function Header() {
   let currentUrl = ''
 
   return (
-    <header className="flex items-center py-2 px-2 sm:px-0 sm:py-3 space-x-2 opacity-0 sm:opacity-50 hover:opacity-100 transition-all duration-300">
+    <header className="flex items-center py-2 px-2 sm:px-0 sm:py-3 space-x-2 opacity-50 hover:opacity-100 transition-all duration-300">
       <div className="flex space-x-2">
         <Link href="/">
           <a

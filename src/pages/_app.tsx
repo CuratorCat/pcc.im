@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
   return (
     <>
@@ -15,8 +15,8 @@ function App({ Component, pageProps }) {
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
 
-        <meta name="description" content="Description" />
-        <meta name="keywords" content="Keywords" />
+        <meta name="description" content="show your ens profile" />
+        <meta name="keywords" content="pcc.im, ens" />
         <title>pcc.im</title>
 
         <meta name="application-name" content="pcc.im" />
