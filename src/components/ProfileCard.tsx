@@ -9,7 +9,7 @@ import Socials from 'components/Socials'
 import Addresses from 'components/Addresses'
 import EnsBadge from './Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
-import { CopyToClipboard } from './CopyToClipboard'
+import { copyTextWithToast } from 'functions/CopyHelpers'
 
 export function ProfileCard(props) {
   if (!props.ens || props.address == null) return null
@@ -209,13 +209,14 @@ function H3({ children }) {
 function ProfileAddress(address) {
   if (!address || address === '') return null
   return (
-    <div className="text-sm text-violet-400 font-semibold tracking-wider">
-      <CopyToClipboard copyText={address}>
-        <span className="hover:cursor-pointer group">
-          {shortenAddress(address)}
-          <DuplicateIcon className="-mt-1 ml-1 w-4 h-4 inline-block opacity-25 hover:opacity-100 group-hover:opacity-100" />
-        </span>
-      </CopyToClipboard>
+    <div className="text-sm">
+      <button
+        className="hover:cursor-pointer text-sm group font-semibold tracking-wider text-violet-400"
+        onClick={() => copyTextWithToast(address)}
+      >
+        {shortenAddress(address)}
+        <DuplicateIcon className="-mt-1 ml-1 w-4 h-4 inline-block opacity-25 hover:opacity-100 group-hover:opacity-100 transition-all duration-150" />
+      </button>
     </div>
   )
 }

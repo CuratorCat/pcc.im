@@ -1,7 +1,7 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon, DuplicateIcon } from '@heroicons/react/outline'
 import { EthereumLogo, BitcoinLogo } from 'components/icons'
-import { CopyToClipboard } from 'components/CopyToClipboard'
+import { copyTextWithToast } from 'functions/CopyHelpers'
 
 export default function Addresses(props) {
   if (props.ethAddress == null || props.btcAddress == null) {
@@ -60,9 +60,13 @@ export default function Addresses(props) {
                       <div className="address">{props.ethAddress}</div>
                     </div>
                     <div>
-                      <CopyToClipboard copyText={props.ethAddress}>
-                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400" />
-                      </CopyToClipboard>
+                      <button
+                        onClick={() => {
+                          copyTextWithToast(props.ethAddress)
+                        }}
+                      >
+                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+                      </button>
                     </div>
                   </li>
                 ) : null}
@@ -75,9 +79,13 @@ export default function Addresses(props) {
                       <div className="address">{props.btcAddress}</div>
                     </div>
                     <div>
-                      <CopyToClipboard copyText={props.btcAddress}>
-                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400" />
-                      </CopyToClipboard>
+                      <button
+                        onClick={() => {
+                          copyTextWithToast(props.btcAddress)
+                        }}
+                      >
+                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+                      </button>
                     </div>
                   </li>
                 ) : null}
