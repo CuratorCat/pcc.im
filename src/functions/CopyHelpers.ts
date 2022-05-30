@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify'
 
-export const copyText = text => {
+export function copyText(text) {
   copyTextToClipboard(text).catch(err => {
     console.log(err)
   })
 }
 
-export const copyTextWithToast = text => {
+export function copyTextWithToast(text) {
   const notify = () =>
     toast.success('copied: ' + text, {
       position: 'top-center',

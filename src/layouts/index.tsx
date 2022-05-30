@@ -1,10 +1,9 @@
-import Head from 'next/head'
 import { Footer } from 'components/Footer'
 import { Header, HeaderBrand } from 'components/Header'
 import { ToastContainer } from 'react-toastify'
 
 const toastClass = {
-  success: 'bg-violet-500/20 backdrop-blur-xl',
+  success: 'bg-violet-900/50 backdrop-blur-xl shadow-lg shadow-violet-400/10',
   error: 'bg-red-600',
   info: 'bg-gray-600',
   warning: 'bg-orange-400',
@@ -15,7 +14,6 @@ const toastClass = {
 export function LayoutHome({ children }) {
   return (
     <>
-      <GlobalHead />
       <div className="flex flex-col min-h-screen m-auto sm:max-w-lg sm:min-h-fit overflow-hidden">
         <Header />
         <main className="flex flex-1 flex-col rounded-3xl sm:rounded-[36px] min-h-[30vh] p-6 bg-violet-100/10">
@@ -31,7 +29,6 @@ export function LayoutHome({ children }) {
 export function Layout({ children }) {
   return (
     <>
-      <GlobalHead />
       <ToastContainer
         toastClassName={({ type }) =>
           toastClass[type || 'default'] +
@@ -52,7 +49,6 @@ export function Layout({ children }) {
 export function LayoutWider({ children }) {
   return (
     <>
-      <GlobalHead />
       <div className="flex flex-col min-h-screen m-auto sm:max-w-3xl sm:min-h-fit overflow-hidden">
         <Header />
         <main className="flex flex-1 flex-col rounded-3xl sm:rounded-[36px] min-h-[60vh] p-6 bg-violet-100/10">
@@ -61,15 +57,5 @@ export function LayoutWider({ children }) {
         <Footer />
       </div>
     </>
-  )
-}
-
-export function GlobalHead() {
-  return (
-    <Head>
-      <title>pcc.im, show your web3 ENS profile (alpha)</title>
-      <meta name="description" content="pcc.im, show your web3 ENS profile (alpha)" />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
   )
 }

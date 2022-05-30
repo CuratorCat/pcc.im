@@ -2,6 +2,7 @@ import 'styles/style.scss'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
+import { site } from 'siteConfig'
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -15,13 +16,13 @@ function App({ Component, pageProps }: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
 
-        <meta name="apple-mobile-web-app-title" content="pcc.im" />
+        <meta name="apple-mobile-web-app-title" content={site.name} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="pcc.im" />
+        <meta name="application-name" content={site.name} />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#251C45" />
+        <meta name="theme-color" content={site.themeColor} />
 
         <link rel="apple-touch-icon" href="/icons/icon-512x512.png" />
         <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png" />
@@ -29,15 +30,15 @@ function App({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/manifest.json" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="pcc.im" />
-        <meta property="og:description" content="show your ens profile" />
-        <meta property="og:site_name" content="pcc.im" />
-        <meta property="og:url" content="https://pcc.im" />
-        <meta property="og:image" content="https://pcc.im//icons/icon-512x512.png" />
+        <meta property="og:title" content={site.title} />
+        <meta property="og:description" content={site.description} />
+        <meta property="og:site_name" content={site.name} />
+        <meta property="og:url" content={site.url} />
+        <meta property="og:image" content={site.image} />
 
-        <meta name="description" content="show your ens profile" />
-        <meta name="keywords" content="pcc.im, ens" />
-        <title>pcc.im</title>
+        <meta name="description" content={site.description} />
+        <meta name="keywords" content={site.keywords} />
+        <title>{site.title}</title>
       </Head>
       <Component key={router.asPath} {...pageProps} />
     </>
