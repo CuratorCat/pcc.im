@@ -1,10 +1,8 @@
-import { Search } from 'components/Search'
 import { LayoutHome } from 'layouts'
+import { Search } from 'components/Search'
 import { ExpoloreEns } from 'components/ExploreEns'
 
-export default Home
-
-function Home() {
+export default function Home() {
   return (
     <>
       <LayoutHome>

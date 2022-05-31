@@ -7,13 +7,12 @@ import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from
 import { formatUrl } from 'functions/SocialHelpers'
 import Socials from 'components/Socials'
 import Addresses from 'components/Addresses'
-import EnsBadge from './Profile/EnsBadge'
+import EnsBadge from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
+import Head from 'next/head'
 
-export function ProfileCard(props) {
-  if (!props.ens || props.address == null) return null
-
+export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
   // profile
   const [description, setDescription] = useState(null)
@@ -31,6 +30,7 @@ export function ProfileCard(props) {
   const [btcAddress, setBtcAddress] = useState(null)
 
   useEffect(() => {
+    console.log('props.ens', props.ens)
     const fetchData = async () => {
       const resolver = await provider.getResolver(props.ens)
 
@@ -99,7 +99,7 @@ export function ProfileCard(props) {
     }
 
     fetchData().catch(console.error)
-  }, [])
+  }, [props.ens])
 
   const Bio = () => {
     if (description == null || url == null || email == null || contentHash == null) {
@@ -158,6 +158,9 @@ export function ProfileCard(props) {
 
   return (
     <>
+      <Head>
+        <title>{props.ens} ens profile - pcc.im</title>
+      </Head>
       <H3> {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
 
       {/* card head */}
