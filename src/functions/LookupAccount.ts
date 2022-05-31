@@ -14,7 +14,8 @@ export function lookUpAccount(tryAddress, tryEns, setEthAddress, setEns, setPrim
     
     setTimeout(() => {
       if (provider.websocket.readyState != 1) {
-        console.log('ws', provider.websocket.readyState)
+        console.log('websocket.readyState', provider.websocket.readyState)
+        console.log('@quick-hack: reload to reopen ws connection')
         router.reload()
       }
     }, 5000)
