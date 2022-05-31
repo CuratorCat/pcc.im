@@ -93,7 +93,7 @@ export function tryTwitterUserUrl(string) {
       return `https://${string}`
     }
   }
-  return `https://twitter.com/${string}`
+  return `https://twitter.com/${string.replace(/^@/, '')}`
 }
 
 export function tryTwitterUserHandle(string) {
@@ -138,7 +138,7 @@ export function tryGithubUserUrl(string) {
   if (!string) return null
   if (isGithubUserUrl(string)) return `https://github.com/${extractGithubHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
-  return `https://github.com/${string}`
+  return `https://github.com/${string.replace(/^@/, '')}`
 }
 
 export function tryTelegramUserHandle(string) {
@@ -151,5 +151,5 @@ export function tryTelegramUserUrl(string) {
   if (!string) return null
   if (isTelegramUserUrl(string)) return `https://t.me/${extractTelegramHandle(string)}`
   if (isValidUrl(string)) return formatUrl(string)
-  return `https://t.me/${string}`
+  return `https://t.me/${string.replace(/^@/, '')}`
 }
