@@ -22,6 +22,7 @@ export function formatUrl(url) {
   return isHttpProtocol(url) ? `https://${url.replace(/^https?:\/\//, '')}` : `https://${url}`
 }
 
+// twitter
 export function isTwitterUserUrl(string) {
   if (!string) return false
   const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
@@ -31,54 +32,6 @@ export function isTwitterUserUrl(string) {
 export function extractTwitterHandle(string) {
   if (!string) return null
   const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([A-Za-z0-9_]+)/im)
-  return match ? match[1] : null
-}
-
-export function isInstagramUrl(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([A-Za-z0-9-_\.]+)/im)
-  return match ? true : false
-}
-
-export function isTelegramUserUrl(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
-  return match ? true : false
-}
-
-export function extractTelegramHandle(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
-  return match ? match[1] : null
-}
-
-export function extractInstagramHandle(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([A-Za-z0-9-_\.]+)/im)
-  return match ? match[1] : null
-}
-
-export function isTiktokUrl(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
-  return match ? true : false
-}
-
-export function extractTiktokHandle(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
-  return match ? match[1] : null
-}
-
-export function isGithubUserUrl(string) {
-  if (!string) return false
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
-  return match ? true : false
-}
-
-export function extractGithubHandle(string) {
-  if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
   return match ? match[1] : null
 }
 
@@ -102,6 +55,19 @@ export function tryTwitterUserHandle(string) {
   return `${string}`
 }
 
+// instagram
+export function isInstagramUrl(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([A-Za-z0-9-_\.]+)/im)
+  return match ? true : false
+}
+
+export function extractInstagramHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([A-Za-z0-9-_\.]+)/im)
+  return match ? match[1] : null
+}
+
 export function tryInstagramUserHandle(string) {
   if (!string) return null
   if (isInstagramUrl(string)) return extractInstagramHandle(string)
@@ -113,6 +79,45 @@ export function tryInstagramUserUrl(string) {
   if (isInstagramUrl(string)) return `https://instagram.com/${extractInstagramHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
   return `https://instagram.com/${string}`
+}
+
+// telegram
+export function isTelegramUserUrl(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
+  return match ? true : false
+}
+
+export function extractTelegramHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([A-Za-z0-9_]+)/im)
+  return match ? match[1] : null
+}
+
+export function tryTelegramUserHandle(string) {
+  if (!string) return null
+  if (isTelegramUserUrl(string)) return extractTelegramHandle(string)
+  return `${string}`
+}
+
+export function tryTelegramUserUrl(string) {
+  if (!string) return null
+  if (isTelegramUserUrl(string)) return `https://t.me/${extractTelegramHandle(string)}`
+  if (isValidUrl(string)) return formatUrl(string)
+  return `https://t.me/${string.replace(/^@/, '')}`
+}
+
+// tiktok
+export function isTiktokUrl(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
+  return match ? true : false
+}
+
+export function extractTiktokHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([A-Za-z0-9-\.]+)/im)
+  return match ? match[1] : null
 }
 
 export function tryTiktokUserHandle(string) {
@@ -128,6 +133,19 @@ export function tryTiktokUserUrl(string) {
   return `https://tiktok.com/${string}`
 }
 
+// github
+export function isGithubUserUrl(string) {
+  if (!string) return false
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
+  return match ? true : false
+}
+
+export function extractGithubHandle(string) {
+  if (!string) return null
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([A-Za-z0-9-]+)/im)
+  return match ? match[1] : null
+}
+
 export function tryGithubUserHandle(string) {
   if (!string) return null
   if (isGithubUserUrl(string)) return extractGithubHandle(string)
@@ -139,17 +157,4 @@ export function tryGithubUserUrl(string) {
   if (isGithubUserUrl(string)) return `https://github.com/${extractGithubHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
   return `https://github.com/${string.replace(/^@/, '')}`
-}
-
-export function tryTelegramUserHandle(string) {
-  if (!string) return null
-  if (isTelegramUserUrl(string)) return extractTelegramHandle(string)
-  return `${string}`
-}
-
-export function tryTelegramUserUrl(string) {
-  if (!string) return null
-  if (isTelegramUserUrl(string)) return `https://t.me/${extractTelegramHandle(string)}`
-  if (isValidUrl(string)) return formatUrl(string)
-  return `https://t.me/${string.replace(/^@/, '')}`
 }
