@@ -53,9 +53,9 @@ export default function Account() {
           <Head>
             <title>404: {account} - pcc.im</title>
           </Head>
-          <h3 className="text-3xl break-all">
+          <h3 className="text-3xl">
             can not found ens profile for
-            <p className="text-2xl font-semibold ">{account}</p>
+            <p className="break-all pt-2 text-violet-400">{account}</p>
           </h3>
           <Search />
           <ExpoloreEns />
