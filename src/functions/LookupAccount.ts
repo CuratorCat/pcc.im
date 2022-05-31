@@ -17,7 +17,7 @@ export function lookUpAccount(tryAddress, tryEns, setEthAddress, setEns, setPrim
         console.log('ws', provider.websocket.readyState)
         router.reload()
       }
-    }, 10000)
+    }, 5000)
 
     console.log('🛠😺')
 

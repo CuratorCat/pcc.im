@@ -1,21 +1,21 @@
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import { useState } from 'react'
-import { isAddress } from 'ethers/lib/utils'
 import { Layout } from 'layouts'
+import { isAddress } from 'ethers/lib/utils'
 import { maybeEns } from 'functions/EnsHelpers'
 import { lookUpAccount } from 'functions/LookupAccount'
 import { Profile } from 'components/Profile'
-import { Avatar } from 'components/Avatar'
 import EnsBadge from 'components/Profile/EnsBadge'
+import { Avatar } from 'components/Avatar'
 import { Search } from 'components/Search'
-import Head from 'next/head'
 import { ExpoloreEns } from 'components/ExploreEns'
 
 export default function Account() {
   const router = useRouter()
   const { account } = router.query
 
-  // account basic info
+  // account
   const [ethAddress, setEthAddress] = useState(null)
   const [ens, setEns] = useState(null)
   const [primaryEns, setPrimaryEns] = useState(null)
