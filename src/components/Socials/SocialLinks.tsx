@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { TwitterLogo, InstagramLogo, TiktokLogo, GithubLogo, DiscordLogo } from 'components/icons'
+import { TwitterLogo, InstagramLogo, TiktokLogo, GithubLogo, DiscordLogo, LinkedinLogo } from 'components/icons'
 import {
   tryTwitterUserHandle,
   tryTwitterUserUrl,
@@ -13,6 +13,8 @@ import {
   isHttpProtocol,
   tryTelegramUserUrl,
   tryTelegramUserHandle,
+  tryLinkedinHandle,
+  tryLinkedinUserUrl
 } from 'functions/SocialHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 
@@ -106,6 +108,19 @@ export function SocialGithub(props) {
       <a className="text-black" target="_blank">
         <GithubLogo className="social-logo" />
         <span>{tryGithubUserHandle(props.social)}</span>
+        <ExternalLinkIcon className="indicator" />
+      </a>
+    </Link>
+  )
+}
+
+export function SocialLinkedin(props) {
+  if (props == null || props.social == '' || props.social == null) return null
+  return (
+    <Link href={tryLinkedinUserUrl(props.social)}>
+      <a className="text-sky-700" target="_blank">
+        <LinkedinLogo className="social-logo" />
+        <span>{tryLinkedinHandle(props.social)}</span>
         <ExternalLinkIcon className="indicator" />
       </a>
     </Link>

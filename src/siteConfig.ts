@@ -1,4 +1,4 @@
-export const site = {
+export const site: { [key: string]: string } = {
   name: 'pcc.im',
   title: 'pcc.im, show your ens profile',
   description: 'show your ens profile with pcc.im',

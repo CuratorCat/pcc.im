@@ -33,7 +33,7 @@ export default function About() {
             <li>
               avatar, description, notice<sup>(x)</sup>, url, email, contentHash<sup>(*)</sup>
             </li>
-            <li>twitter, instagram, tiktok, telegram, discord, github</li>
+            <li>twitter, instagram, tiktok, telegram, discord, github, linkedin</li>
           </ul>
           <h4>blockchain addresses</h4>
           <ul>

@@ -26,11 +26,11 @@ export function Profile(props) {
   const [discord, setDiscord] = useState(null)
   const [telegram, setTelegram] = useState(null)
   const [github, setGithub] = useState(null)
+  const [linkedin, setLinkedin] = useState(null)
   // addresses
   const [btcAddress, setBtcAddress] = useState(null)
 
   useEffect(() => {
-    console.log('props.ens', props.ens)
     const fetchData = async () => {
       const resolver = await provider.getResolver(props.ens)
 
@@ -84,6 +84,10 @@ export function Profile(props) {
 
       resolver.getText('com.github').then(result => {
         result ? setGithub(result) : setGithub('')
+      })
+
+      resolver.getText('com.linkedin').then(result => {
+        result ? setLinkedin(result) : setLinkedin('')
       })
 
       // get addresses
@@ -194,6 +198,7 @@ export function Profile(props) {
         tiktok={tiktok}
         telegram={telegram}
         discord={discord}
+        linkedin={linkedin}
       />
 
       <Addresses ethAddress={props.address} btcAddress={btcAddress} />

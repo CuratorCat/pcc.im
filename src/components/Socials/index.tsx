@@ -7,6 +7,7 @@ import {
   SocialGithub,
   SocialDiscord,
   SocialTelegram,
+  SocialLinkedin
 } from './SocialLinks'
 
 export default function Socials(props) {
@@ -16,6 +17,7 @@ export default function Socials(props) {
     props.instagram == null ||
     props.tiktok == null ||
     props.discord == null ||
+    props.linkedin == null ||
     props.telegram == null
   ) {
     return (
@@ -34,6 +36,7 @@ export default function Socials(props) {
     props.instagram == '' &&
     props.tiktok == '' &&
     props.discord == '' &&
+    props.linkedin == '' &&
     props.telegram == ''
   )
     return null
@@ -75,6 +78,7 @@ export default function Socials(props) {
                 <SocialDiscord social={props.discord} />
                 <SocialTelegram social={props.telegram} />
                 <SocialGithub social={props.github} />
+                <SocialLinkedin social={props.github} />
               </div>
             </Disclosure.Panel>
           </Transition>
