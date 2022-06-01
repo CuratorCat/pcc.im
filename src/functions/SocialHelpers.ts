@@ -162,13 +162,13 @@ export function tryGithubUserUrl(string) {
 // linkedin
 export function isLinkedinUrl(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9]+)/i)
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9-_.]+)/i)
   return match ? true : false
 }
 
 export function extractLinkedinHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9]+)/i)
+  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9-_.]+)/i)
   return match ? match[1] : null
 }
 
@@ -180,7 +180,7 @@ export function tryLinkedinHandle(string) {
 
 export function tryLinkedinUserUrl(string) {
   if (!string) return null
-  if (isInstagramUrl(string)) return `https://linkedin.com/in/${extractLinkedinHandle(string)}`
+  if (isLinkedinUrl(string)) return `https://linkedin.com/in/${extractLinkedinHandle(string)}`
   if (isHttpProtocol(string)) return formatUrl(string)
   return `https://linkedin.com/in/${string.replace(/^@/, '')}`
 }
