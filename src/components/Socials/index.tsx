@@ -78,7 +78,7 @@ export default function Socials(props) {
                 <SocialDiscord social={props.discord} />
                 <SocialTelegram social={props.telegram} />
                 <SocialGithub social={props.github} />
-                <SocialLinkedin social={props.github} />
+                <SocialLinkedin social={props.linkedin} />
               </div>
             </Disclosure.Panel>
           </Transition>
