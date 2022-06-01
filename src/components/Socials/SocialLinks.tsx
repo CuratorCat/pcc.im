@@ -26,7 +26,7 @@ export function SocialTwitter(props) {
   return (
     <Link href={tryTwitterUserUrl(props.social)}>
       <a className="text-blue-500" target="_blank">
-        <TwitterLogo className="social-logo ml-1" />
+        <TwitterLogo className="social-logo" />
         <span>{tryTwitterUserHandle(props.social)}</span>
         <ExternalLinkIcon className="indicator" />
       </a>
