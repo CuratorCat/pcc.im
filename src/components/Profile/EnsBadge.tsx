@@ -5,7 +5,7 @@ export default function EnsBadge(ens, primaryEns) {
     return (
       <span className="px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold bg-black/20 text-violet-400/25 uppercase content-center">
         <div className="inline-block rounded-full w-2 h-2  bg-violet-400 mr-1.5 -ml-0.5 animate-ping" />
-        Checking Primary ENS...
+        Checking Primary ENS
       </span>
     )
   }
