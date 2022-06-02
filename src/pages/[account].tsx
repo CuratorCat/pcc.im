@@ -21,7 +21,7 @@ export default function Account() {
   const [primaryEns, setPrimaryEns] = useState(null)
   const [resolver, setResolver] = useState(null)
   const [proceed, setProceed] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null) // TODO: error handling
 
   if (!account) return null
 
@@ -30,6 +30,8 @@ export default function Account() {
   const tryEns = maybeEns(account) ? account : ''
 
   // fetch account info
+  // pass address or ens to Query
+  // use .pcc.eth for invalid address or !maybeEns
   lookUpAccount(
     tryAddress,
     tryAddress == '' && tryEns == '' ? account + '.pcc.eth' : tryEns,
@@ -40,8 +42,6 @@ export default function Account() {
     setProceed
   )
 
-  // pass address or ens to Query
-  // use .pcc.eth for invalid address or !maybeEns
   return (
     <Layout>
       {/* Errors */}

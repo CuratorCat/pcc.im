@@ -13,31 +13,59 @@ export function isValidUrl(string) {
 
 export function isHttpProtocol(string) {
   if (!string) return false
-  const urlMatch = string.match(/^https?:\/\//)
+  const urlMatch = string.match(/^https?:\/\//i)
   return urlMatch ? true : false
 }
 
 export function formatUrl(url) {
   if (!url) return ''
-  return isHttpProtocol(url) ? `https://${url.replace(/^https?:\/\//, '')}` : `https://${url}`
+  return isHttpProtocol(url) ? `https://${url.replace(/^https?:\/\//i, '')}` : `https://${url}`
+}
+
+// social regex
+const socials = {
+  twitter: {
+    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([a-z0-9_]+)/i,
+    baseurl: 'https://twitter.com/',
+  },
+  instagram: {
+    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([a-z0-9-_\.]+)/i,
+    baseurl: 'https://instagram.com/',
+  },
+  telegram: {
+    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([a-z0-9_]+)/i,
+    baseurl: 'https://t.me/',
+  },
+  tiktok: {
+    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([a-z0-9-\.]+)/i,
+    baseurl: 'https://tiktok.com/',
+  },
+  github: {
+    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([a-z0-9-]+)/i,
+    baseurl: 'https://github.com/',
+  },
+  linkedin: {
+    regex: /(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin.[a-z]{2,3})\/(?:in\/)@?([a-z0-9-_.]+)/i,
+    baseurl: 'https://linkedin.com/in/',
+  },
 }
 
 // twitter
 export function isTwitterUserUrl(string) {
   if (!string) return false
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([a-z0-9_]+)/i)
+  const match = string.match(socials.twitter.regex)
   return match ? true : false
 }
 
 export function extractTwitterHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([a-z0-9_]+)/i)
+  const match = string.match(socials.twitter.regex)
   return match ? match[1] : null
 }
 
 export function tryTwitterUserUrl(string) {
   if (!string) return null
-  if (isTwitterUserUrl(string)) return `https://twitter.com/${extractTwitterHandle(string)}`
+  if (isTwitterUserUrl(string)) return socials.twitter.baseurl + extractTwitterHandle(string)
 
   if (isValidUrl(string)) {
     if (isHttpProtocol(string)) {
@@ -46,7 +74,7 @@ export function tryTwitterUserUrl(string) {
       return `https://${string}`
     }
   }
-  return `https://twitter.com/${string.replace(/^@/, '')}`
+  return socials.twitter.baseurl + string.replace(/^@/, '')
 }
 
 export function tryTwitterUserHandle(string) {
@@ -58,13 +86,13 @@ export function tryTwitterUserHandle(string) {
 // instagram
 export function isInstagramUrl(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([a-z0-9-_\.]+)/i)
+  const match = string.match(socials.instagram.regex)
   return match ? true : false
 }
 
 export function extractInstagramHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([a-z0-9-_\.]+)/i)
+  const match = string.match(socials.instagram.regex)
   return match ? match[1] : null
 }
 
@@ -76,21 +104,21 @@ export function tryInstagramUserHandle(string) {
 
 export function tryInstagramUserUrl(string) {
   if (!string) return null
-  if (isInstagramUrl(string)) return `https://instagram.com/${extractInstagramHandle(string)}`
+  if (isInstagramUrl(string)) return socials.instagram.baseurl + extractInstagramHandle(string)
   if (isHttpProtocol(string)) return formatUrl(string)
-  return `https://instagram.com/${string}`
+  return socials.instagram.baseurl + string
 }
 
 // telegram
 export function isTelegramUserUrl(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([a-z0-9_]+)/i)
+  const match = string.match(socials.telegram.regex)
   return match ? true : false
 }
 
 export function extractTelegramHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([a-z0-9_]+)/i)
+  const match = string.match(socials.telegram.regex)
   return match ? match[1] : null
 }
 
@@ -102,21 +130,21 @@ export function tryTelegramUserHandle(string) {
 
 export function tryTelegramUserUrl(string) {
   if (!string) return null
-  if (isTelegramUserUrl(string)) return `https://t.me/${extractTelegramHandle(string)}`
+  if (isTelegramUserUrl(string)) return socials.telegram.baseurl + extractTelegramHandle(string)
   if (isValidUrl(string)) return formatUrl(string)
-  return `https://t.me/${string.replace(/^@/, '')}`
+  return socials.telegram.baseurl + string.replace(/^@/, '')
 }
 
 // tiktok
 export function isTiktokUrl(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([a-z0-9-\.]+)/i)
+  const match = string.match(socials.tiktok.regex)
   return match ? true : false
 }
 
 export function extractTiktokHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([a-z0-9-\.]+)/i)
+  const match = string.match(socials.tiktok.regex)
   return match ? match[1] : null
 }
 
@@ -128,21 +156,21 @@ export function tryTiktokUserHandle(string) {
 
 export function tryTiktokUserUrl(string) {
   if (!string) return null
-  if (isTiktokUrl(string)) return `https://tiktok.com/${extractTiktokHandle(string)}`
+  if (isTiktokUrl(string)) return socials.tiktok.baseurl + extractTiktokHandle(string)
   if (isHttpProtocol(string)) return formatUrl(string)
-  return `https://tiktok.com/${string}`
+  return socials.tiktok.baseurl + string.replace(/^@/, '')
 }
 
 // github
 export function isGithubUserUrl(string) {
   if (!string) return false
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([a-z0-9-]+)/i)
+  const match = string.match(socials.github.regex)
   return match ? true : false
 }
 
 export function extractGithubHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([a-z0-9-]+)/i)
+  const match = string.match(socials.github.regex)
   return match ? match[1] : null
 }
 
@@ -154,21 +182,21 @@ export function tryGithubUserHandle(string) {
 
 export function tryGithubUserUrl(string) {
   if (!string) return null
-  if (isGithubUserUrl(string)) return `https://github.com/${extractGithubHandle(string)}`
+  if (isGithubUserUrl(string)) return socials.github.baseurl + extractGithubHandle(string)
   if (isHttpProtocol(string)) return formatUrl(string)
-  return `https://github.com/${string.replace(/^@/, '')}`
+  return socials.github.baseurl + string.replace(/^@/, '')
 }
 
 // linkedin
 export function isLinkedinUrl(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9-_.]+)/i)
+  const match = string.match(socials.linkedin.regex)
   return match ? true : false
 }
 
 export function extractLinkedinHandle(string) {
   if (!string) return null
-  const match = string.match(/(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin\.[a-z]{2,3})\/(?:in\/)?@?([a-z0-9-_.]+)/i)
+  const match = string.match(socials.linkedin.regex)
   return match ? match[1] : null
 }
 
@@ -180,7 +208,7 @@ export function tryLinkedinHandle(string) {
 
 export function tryLinkedinUserUrl(string) {
   if (!string) return null
-  if (isLinkedinUrl(string)) return `https://linkedin.com/in/${extractLinkedinHandle(string)}`
+  if (isLinkedinUrl(string)) return socials.linkedin.baseurl + extractLinkedinHandle(string)
   if (isHttpProtocol(string)) return formatUrl(string)
-  return `https://linkedin.com/in/${string.replace(/^@/, '')}`
+  return socials.linkedin.baseurl + string.replace(/^@/, '')
 }
