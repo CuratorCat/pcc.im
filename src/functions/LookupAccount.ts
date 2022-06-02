@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { provider } from 'provider'
 import { getAddress } from 'ethers/lib/utils'
-import HackWS from 'functions/HackWS'
+import { useRouter } from 'next/router'
 
 export function lookUpAccount(tryAddress, tryEns, setEthAddress, setEns, setPrimaryEns, setResolver, setProceed) {
   if (!tryAddress && !tryEns) {
     return null
   }
+  const router = useRouter()
 
   useEffect(() => {
     let isLookup = true
@@ -16,8 +17,20 @@ export function lookUpAccount(tryAddress, tryEns, setEthAddress, setEns, setPrim
     }
 
     if (isLookup && (tryAddress || tryEns)) {
+      // hack
       // hack to open websocket connection by reload page after ws connection is closed
-      HackWS
+      if (process.env.useWebSocket) {
+        setTimeout(() => {
+          // @ts-ignore
+          console.log('websocket.readyState', provider.websocket.readyState)
+
+          // @ts-ignore, state 1 = open
+          if (provider.websocket.readyState != 1) {
+            console.log('@quick-hack: reload to reopen ws connection by reload page')
+            router.reload()
+          }
+        }, 5000) // wait 5 seconds
+      }
 
       // start lookup
       console.log('😺🛠👀')
