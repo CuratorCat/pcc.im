@@ -68,7 +68,7 @@ export default function Account() {
           <Head>
             <title>looking up {account} - pcc.im</title>
           </Head>
-          <h3 className="text-4xl mb-3 font-light text-violet-400">profile</h3>
+          <h3 className="text-4xl mb-3 font-light text-violet-400">ens profile</h3>
           {/* card head */}
           <div className="flex items-start space-x-3">
             {/* avatar */}

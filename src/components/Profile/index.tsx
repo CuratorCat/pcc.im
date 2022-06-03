@@ -160,9 +160,9 @@ export function Profile(props) {
   return (
     <>
       <Head>
-        <title>{props.ens} ens profile - pcc.im</title>
+        <title>{props.ens}'s' ens profile - pcc.im</title>
       </Head>
-      <H3> {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
+      <H3>ens {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
 
       {/* card head */}
       <div className="flex items-start space-x-3">
