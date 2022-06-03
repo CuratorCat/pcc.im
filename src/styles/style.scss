@@ -19,6 +19,10 @@ footer {
   }
 }
 
+.Toastify__close-button, .Toastify__close-button--light {
+  display: none !important;
+}
+
 .profile-view {
   @apply relative space-y-3;
 
@@ -95,6 +99,21 @@ footer {
   }
 }
 
-.Toastify__close-button, .Toastify__close-button--light {
-  display: none !important;
+.ens-badge {
+  @apply px-2 py-0.5 rounded-full break-all line-clamp-1 text-xs font-bold;
+  &.loading {
+    @apply bg-black/20 text-violet-400/25 uppercase content-center;
+    .indicator {
+      @apply inline-block rounded-full w-2 h-2  bg-violet-400 mr-1.5 -ml-0.5 animate-ping;
+    }
+  }
+  &.no-primary {
+    @apply bg-black/20 text-violet-400/25 uppercase;
+  }
+  &.primary {
+    @apply bg-violet-400 text-black/50 uppercase;
+  }
+  &.alt {
+    @apply bg-violet-400 text-black/50;
+  }
 }

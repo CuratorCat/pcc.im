@@ -25,27 +25,27 @@ export function formatUrl(url) {
 // social regex
 const socials = {
   twitter: {
-    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([a-z0-9_]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:www\.)?(?:twitter\.com)\/@?([a-z0-9_]+)/i,
     baseurl: 'https://twitter.com/',
   },
   instagram: {
-    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([a-z0-9-_\.]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:www\.)?(?:instagram\.com|instagr\.am)\/@?([a-z0-9-_\.]+)/i,
     baseurl: 'https://instagram.com/',
   },
   telegram: {
-    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:t\.me)\/@?([a-z0-9_]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:www\.)?(?:t\.me)\/@?([a-z0-9_]+)/i,
     baseurl: 'https://t.me/',
   },
   tiktok: {
-    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([a-z0-9-\.]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:www\.)?(?:tiktok\.com)\/@?([a-z0-9-\.]+)/i,
     baseurl: 'https://tiktok.com/',
   },
   github: {
-    regex: /(?:(?:http|https):\/\/)?(?:www\.)?(?:github\.com)\/([a-z0-9-]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:www\.)?(?:github\.com)\/([a-z0-9-]+)/i,
     baseurl: 'https://github.com/',
   },
   linkedin: {
-    regex: /(?:(?:http|https):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin.[a-z]{2,3})\/(?:in\/)@?([a-z0-9-_.]+)/i,
+    regex: /(?:(?:https?):\/\/)?(?:[a-z]{2,3}\.)?(?:linkedin.[a-z]{2,3})\/(?:in\/)@?([a-z0-9-_.]+)/i,
     baseurl: 'https://linkedin.com/in/',
   },
 }

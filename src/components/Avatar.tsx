@@ -23,7 +23,6 @@ export function Avatar(props) {
       </div>
     )
   } else {
-    // console.log(props.ens)
     return (
       <>
         {ImgLoader(props.ens)}

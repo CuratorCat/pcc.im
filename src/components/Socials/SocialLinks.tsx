@@ -14,16 +14,14 @@ import {
   tryTelegramUserUrl,
   tryTelegramUserHandle,
   tryLinkedinHandle,
-  tryLinkedinUserUrl
+  tryLinkedinUserUrl,
 } from 'functions/SocialHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
-
 import { ExternalLinkIcon, DuplicateIcon } from '@heroicons/react/outline'
 import { TelegramLogo } from 'components/icons'
 
 export function SocialTwitter(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryTwitterUserUrl(props.social)}>
       <a className="text-blue-500" target="_blank">
         <TwitterLogo className="social-logo" />
@@ -35,8 +33,7 @@ export function SocialTwitter(props) {
 }
 
 export function SocialInstagram(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryInstagramUserUrl(props.social)}>
       <a className="text-pink-500" target="_blank">
         <InstagramLogo className="social-logo" />
@@ -76,8 +73,7 @@ export function SocialDiscord(props) {
 }
 
 export function SocialTiktok(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryTiktokUserUrl(props.social)}>
       <a className="text-black" target="_blank">
         <TiktokLogo className="social-logo" />
@@ -89,8 +85,7 @@ export function SocialTiktok(props) {
 }
 
 export function SocialTelegram(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryTelegramUserUrl(props.social)}>
       <a className="text-sky-500" target="_blank">
         <TelegramLogo className="social-logo" />
@@ -102,8 +97,7 @@ export function SocialTelegram(props) {
 }
 
 export function SocialGithub(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryGithubUserUrl(props.social)}>
       <a className="text-black" target="_blank">
         <GithubLogo className="social-logo" />
@@ -115,8 +109,7 @@ export function SocialGithub(props) {
 }
 
 export function SocialLinkedin(props) {
-  if (props == null || props.social == '' || props.social == null) return null
-  return (
+  return props == null || props.social == '' || props.social == null ? null : (
     <Link href={tryLinkedinUserUrl(props.social)}>
       <a className="text-sky-700" target="_blank">
         <LinkedinLogo className="social-logo" />

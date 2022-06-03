@@ -6,7 +6,7 @@ import { isAddress } from 'ethers/lib/utils'
 import { maybeEns } from 'functions/EnsHelpers'
 import { lookUpAccount } from 'functions/LookupAccount'
 import { Profile } from 'components/Profile'
-import EnsBadge from 'components/Profile/EnsBadge'
+import { EnsBadge } from 'components/Profile/EnsBadge'
 import { Avatar } from 'components/Avatar'
 import { Search } from 'components/Search'
 import { ExpoloreEns } from 'components/ExploreEns'
@@ -82,7 +82,9 @@ export default function Account() {
               <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">{account}</h2>
 
               {/* ens badge */}
-              <div className="flex space-x-1">{EnsBadge(null, null)}</div>
+              <div className="flex space-x-1">
+                <EnsBadge />
+              </div>
             </div>
           </div>
         </div>

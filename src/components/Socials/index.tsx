@@ -7,7 +7,7 @@ import {
   SocialGithub,
   SocialDiscord,
   SocialTelegram,
-  SocialLinkedin
+  SocialLinkedin,
 } from './SocialLinks'
 
 export default function Socials(props) {

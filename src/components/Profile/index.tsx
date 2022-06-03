@@ -7,7 +7,7 @@ import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from
 import { formatUrl } from 'functions/SocialHelpers'
 import Socials from 'components/Socials'
 import Addresses from 'components/Addresses'
-import EnsBadge from 'components/Profile/EnsBadge'
+import { EnsBadge } from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
@@ -138,11 +138,8 @@ export function Profile(props) {
             {email == '' ? null : (
               <li>
                 <MailIcon className="icon" aria-hidden="true" />
-
                 <Link href={'mailto:' + email}>
-                  <a>
-                    <span>{email}</span>
-                  </a>
+                  <span>{email}</span>
                 </Link>
               </li>
             )}
@@ -180,7 +177,9 @@ export function Profile(props) {
           <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">{props.ens}</h2>
 
           {/* ens badge */}
-          <div className="flex space-x-1">{EnsBadge(props.ens, props.primaryEns)}</div>
+          <div className="flex space-x-1">
+            <EnsBadge ens={props.ens} primaryEns={props.primaryEns} />
+          </div>
 
           {/* address */}
           {ProfileAddress(props.address)}
@@ -207,11 +206,7 @@ export function Profile(props) {
 }
 
 function H3({ children }) {
-  return (
-    <>
-      <h3 className="text-4xl mb-3 font-light text-violet-400">{children}</h3>
-    </>
-  )
+  return <h3 className="text-4xl mb-3 font-light text-violet-400">{children}</h3>
 }
 
 function ProfileAddress(address) {

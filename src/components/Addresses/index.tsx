@@ -48,47 +48,53 @@ export default function Addresses(props) {
           >
             <Disclosure.Panel static as="div" className="leading-none">
               <ul className="addresses-list">
-                {props.ethAddress == '' && props.btcAddress == '' ? (
+                {props.ethAddress == '' && props.btcAddress == '' && (
                   <div className="opacity-50">no supported blockchain addresses found</div>
-                ) : null}
+                )}
 
-                {props.ethAddress != null && props.ethAddress != '' ? (
-                  <li>
-                    <EthereumLogo className="logo bg-white" />
-                    <div className="asset">
-                      <h4>ethereum</h4>
-                      <div className="address">{props.ethAddress}</div>
-                    </div>
-                    <div>
-                      <button
-                        onClick={() => {
-                          copyTextWithToast(props.ethAddress)
-                        }}
-                      >
-                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
-                      </button>
-                    </div>
-                  </li>
-                ) : null}
+                {
+                  // ethAddress
+                  props.ethAddress != null && props.ethAddress != '' && (
+                    <li>
+                      <EthereumLogo className="logo bg-white" />
+                      <div className="asset">
+                        <h4>ethereum</h4>
+                        <div className="address">{props.ethAddress}</div>
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => {
+                            copyTextWithToast(props.ethAddress)
+                          }}
+                        >
+                          <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+                        </button>
+                      </div>
+                    </li>
+                  )
+                }
 
-                {props.btcAddress != null && props.btcAddress != '' ? (
-                  <li>
-                    <BitcoinLogo className="logo" />
-                    <div className="asset">
-                      <h4>bitcoin</h4>
-                      <div className="address">{props.btcAddress}</div>
-                    </div>
-                    <div>
-                      <button
-                        onClick={() => {
-                          copyTextWithToast(props.btcAddress)
-                        }}
-                      >
-                        <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
-                      </button>
-                    </div>
-                  </li>
-                ) : null}
+                {
+                  // btcAddress
+                  props.btcAddress != null && props.btcAddress != '' && (
+                    <li>
+                      <BitcoinLogo className="logo" />
+                      <div className="asset">
+                        <h4>bitcoin</h4>
+                        <div className="address">{props.btcAddress}</div>
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => {
+                            copyTextWithToast(props.btcAddress)
+                          }}
+                        >
+                          <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+                        </button>
+                      </div>
+                    </li>
+                  )
+                }
               </ul>
             </Disclosure.Panel>
           </Transition>
