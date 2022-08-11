@@ -11,9 +11,17 @@ import { EnsBadge } from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
+import { ethers, BigNumber } from 'ethers'
+
+const pccEnsAbi = [
+  'function domainMap(string label) view returns (bytes32)',
+  'function hashToIdMap(bytes32) view returns (uint256)',
+]
+const pccEnsMapper = '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB'
 
 export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
+  const [catId, setCatId] = useState(null)
   // profile
   const [description, setDescription] = useState(null)
   const [url, setUrl] = useState(null)
@@ -33,6 +41,16 @@ export function Profile(props) {
   useEffect(() => {
     const fetchData = async () => {
       const resolver = await provider.getResolver(props.ens)
+      const pccEns = new ethers.Contract(pccEnsMapper, pccEnsAbi, provider)
+
+      // get catId for .pcc.eth
+      if (props.ens.endsWith('.pcc.eth')) {
+        pccEns.domainMap(props.ens.toLowerCase().substring(0, props.ens.length - 8)).then(result => {
+          pccEns.hashToIdMap(result).then(result => {
+            setCatId(BigNumber.from(result).toString())
+          })
+        })
+      }
 
       resolver.getText('avatar').then(result => {
         result ? setAvatar(result) : setAvatar('')
@@ -162,8 +180,10 @@ export function Profile(props) {
       <Head>
         <title>{props.ens}'s' ens profile - pcc.im</title>
       </Head>
-      <H3>ens {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}</H3>
-
+      <H3>
+        ens {props.ens.endsWith('.pcc.eth') ? 'purrfile' : 'profile'}
+        {catId ? <span className="inline-block rounded-md ml-2 font-semibold text-sm">Cat#{catId}</span> : ''}
+      </H3>
       {/* card head */}
       <div className="flex items-start space-x-3">
         {/* avatar */}
