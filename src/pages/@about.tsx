@@ -64,8 +64,12 @@ export default function About() {
           </p>
           <h4>open-source</h4>
           <p>
-            i started this project as experiment, and the code is terrible and buggy. i think i'll refactor all the code
-            and open-source someday later.
+            the source-code is on github:{' '}
+            <Link href="https://github.com/CuratorCat/pcc.im">
+              <a target="_blank">https://github.com/curatorcat/pcc.im</a>
+            </Link>
+            . i started this project as experiment, and the code is terrible and buggy. i plan to refactor but don't
+            really have the time for now.
           </p>
           <p>
             this project mainly uses the following open-source projects:
