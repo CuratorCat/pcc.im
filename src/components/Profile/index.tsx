@@ -156,9 +156,9 @@ export function Profile(props) {
             {email == '' ? null : (
               <li>
                 <MailIcon className="icon" aria-hidden="true" />
-                <Link href={'mailto:' + email}>
+                <a href={'mailto:' + email}>
                   <span>{email}</span>
-                </Link>
+                </a>
               </li>
             )}
 
