@@ -25,22 +25,24 @@ export function Avatar(props) {
   } else {
     return (
       <>
-        {ImgLoader(props.ens)}
+        {ImgLoader(props.ens, props.catId)}
       </>
     )
   }
 }
 
 
-function ImgLoader(ens) {
+function ImgLoader(ens, catId) {
   if (!ens) return null
   const [loaded, setLoaded] = useState(false)
+  // special for PCC Cats, loads faster
+  const avatarUrl = catId ? 'https://raw.githubusercontent.com/CuratorCat/pcc-cats-jpg/main/w1000/' + catId + '.jpg' : 'https://metadata.ens.domains/mainnet/avatar/' + ens
 
   return (
     <>
       <div className='w-20 h-20 sm:w-24 sm:h-24 rounded-full'>
       <img
-        src={'https://metadata.ens.domains/mainnet/avatar/' + ens}
+        src={avatarUrl}
         className="w-full h-full rounded-full overflow-hidden"
         onLoad={() => setLoaded(true)}
         alt=""

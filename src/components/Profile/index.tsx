@@ -188,7 +188,7 @@ export function Profile(props) {
       <div className="flex items-start space-x-3">
         {/* avatar */}
         <div className="flex shrink-0 relative">
-          <Avatar avatar={avatar} ens={props.ens} />
+          <Avatar avatar={avatar} ens={props.ens} catId={catId} />
         </div>
 
         {/* account */}
