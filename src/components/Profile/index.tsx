@@ -3,7 +3,7 @@ import { provider } from 'provider'
 import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
-import { DuplicateIcon, LinkIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
+import { DuplicateIcon, GlobeAltIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
 import { formatUrl } from 'functions/SocialHelpers'
 import Socials from 'components/Socials'
 import Addresses from 'components/Addresses'
@@ -141,12 +141,11 @@ export function Profile(props) {
             {/* url */}
             {url == '' ? null : (
               <li>
-                <LinkIcon className="icon" aria-hidden="true" />
-
+                <GlobeAltIcon className="icon" aria-hidden="true" />
                 <Link href={formatUrl(url)}>
-                  <a target="_blank">
+                  <a target="_blank" className="group">
                     <span>{url}</span>
-                    <ExternalLinkIcon className="indicator" />
+                    <ExternalLinkIcon className="inline-block -mt-0.5 w-3 h-3 text-violet-400 opacity-0 group-hover:opacity-100" />
                   </a>
                 </Link>
               </li>
