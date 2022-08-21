@@ -165,7 +165,27 @@ export function Profile(props) {
             {contentHash == '' ? null : (
               <li>
                 <HashtagIcon className="icon" aria-hidden="true" />
-                <div>{contentHash}</div>
+                <div>
+                  <span className="mr-2">{contentHash}</span>
+                  <span className="text-violet-400/25 group">
+                    <button
+                      className="hover:cursor-pointer text-sm group font-semibold tracking-wider hover:text-violet-400"
+                      onClick={() => copyTextWithToast(contentHash)}
+                    >
+                      <DuplicateIcon className="-mt-0.5 w-4 h-4 inline-block" />
+                    </button>
+                    {props.ens.endsWith('.eth') ? (
+                      <span className="pl-3">
+                        <Link href={'https://' + props.ens + '.limo'}>
+                          <a target="_blank" className=" hover:text-violet-400">
+                            <span>{props.ens + '.limo'}</span>
+                            <ExternalLinkIcon className="w-3 h-3 inline-block ml-0.5 -mt-0.5" />
+                          </a>
+                        </Link>
+                      </span>
+                    ) : null}
+                  </span>
+                </div>
               </li>
             )}
           </ul>
