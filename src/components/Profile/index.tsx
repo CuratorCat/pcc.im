@@ -213,7 +213,12 @@ export function Profile(props) {
         {/* account */}
         <div className="flex flex-1 flex-col space-y-1.5 sm:space-y-2">
           {/* ens */}
-          <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all ">{props.ens}</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold leading-tight break-all">
+            <span className="cursor-pointer group" onClick={() => copyTextWithToast(props.ens)}>
+              {props.ens}
+              <DuplicateIcon className="ml-1 w-4 h-4 inline-block text-violet-400 opacity-0 hover:opacity-100 group-hover:opacity-100 transition-all duration-150" />
+            </span>
+          </h2>
 
           {/* ens badge */}
           <div className="flex space-x-1">
