@@ -1,7 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronDownIcon, DuplicateIcon } from '@heroicons/react/outline'
-import { EthereumLogo, BitcoinLogo } from 'components/icons'
-import { copyTextWithToast } from 'functions/CopyHelpers'
+import { ChevronDownIcon } from '@heroicons/react/outline'
+import { AddressItem } from 'components/Addresses/AddressItem'
 
 export default function Addresses(props) {
   if (props.ethAddress == null || props.btcAddress == null) {
@@ -55,44 +54,14 @@ export default function Addresses(props) {
                 {
                   // ethAddress
                   props.ethAddress != null && props.ethAddress != '' && (
-                    <li>
-                      <EthereumLogo className="logo bg-white" />
-                      <div className="asset">
-                        <h4>ethereum</h4>
-                        <div className="address">{props.ethAddress}</div>
-                      </div>
-                      <div>
-                        <button
-                          onClick={() => {
-                            copyTextWithToast(props.ethAddress)
-                          }}
-                        >
-                          <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
-                        </button>
-                      </div>
-                    </li>
+                    <AddressItem type="eth" address={props.ethAddress} />
                   )
                 }
 
                 {
                   // btcAddress
                   props.btcAddress != null && props.btcAddress != '' && (
-                    <li>
-                      <BitcoinLogo className="logo" />
-                      <div className="asset">
-                        <h4>bitcoin</h4>
-                        <div className="address">{props.btcAddress}</div>
-                      </div>
-                      <div>
-                        <button
-                          onClick={() => {
-                            copyTextWithToast(props.btcAddress)
-                          }}
-                        >
-                          <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
-                        </button>
-                      </div>
-                    </li>
+                    <AddressItem type="btc" address={props.btcAddress} />
                   )
                 }
               </ul>
