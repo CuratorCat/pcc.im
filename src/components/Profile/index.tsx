@@ -13,11 +13,13 @@ import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
 import { ethers, BigNumber } from 'ethers'
 
-const pccEnsAbi = [
-  'function domainMap(string label) view returns (bytes32)',
-  'function hashToIdMap(bytes32) view returns (uint256)',
-]
-const pccEnsMapper = '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB'
+const pccEnsMapper = {
+  contract: '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB',
+  abi: [
+    'function domainMap(string label) view returns (bytes32)',
+    'function hashToIdMap(bytes32) view returns (uint256)',
+  ],
+}
 
 export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
@@ -41,10 +43,12 @@ export function Profile(props) {
   useEffect(() => {
     const fetchData = async () => {
       const resolver = await provider.getResolver(props.ens)
-      const pccEns = new ethers.Contract(pccEnsMapper, pccEnsAbi, provider)
+      const pccEns = new ethers.Contract(pccEnsMapper.contract, pccEnsMapper.abi, provider)
+
+      console.log('namehash', props.ens, ethers.utils.namehash(props.ens))
 
       // get catId for .pcc.eth
-      if (props.ens.endsWith('.pcc.eth')) {
+      if (props.ens.endsWith('.pcc.eth') && props.resolver === pccEnsMapper.contract) {
         pccEns.domainMap(props.ens.toLowerCase().substring(0, props.ens.length - 8)).then(result => {
           pccEns.hashToIdMap(result).then(result => {
             setCatId(BigNumber.from(result).toString())
