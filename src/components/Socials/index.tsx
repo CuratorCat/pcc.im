@@ -1,5 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
+import { useEnsTextValue } from 'utils/EnsRecords'
 import {
   SocialTwitter,
   SocialInstagram,
@@ -10,16 +11,18 @@ import {
   SocialLinkedin,
 } from './SocialLinks'
 
-export default function Socials(props) {
-  if (
-    props.twitter == null ||
-    props.github == null ||
-    props.instagram == null ||
-    props.tiktok == null ||
-    props.discord == null ||
-    props.linkedin == null ||
-    props.telegram == null
-  ) {
+export const socialTextsQuery = [
+  'com.twitter',
+  'com.instagram',
+  'com.tiktok',
+  'com.discord',
+  'org.telegram',
+  'com.github',
+  'com.linkedin',
+]
+
+export function Socials(props) {
+  if (props.data.length !== socialTextsQuery.length) {
     return (
       <div className="relative w-full mx-0 group">
         <div className="flex justify-between items-center ">
@@ -30,16 +33,7 @@ export default function Socials(props) {
     )
   }
 
-  if (
-    props.twitter == '' &&
-    props.github == '' &&
-    props.instagram == '' &&
-    props.tiktok == '' &&
-    props.discord == '' &&
-    props.linkedin == '' &&
-    props.telegram == ''
-  )
-    return null
+  if (props.data.filter(item => item.value !== '').length == 0) return null
 
   return (
     <Disclosure defaultOpen>
@@ -72,13 +66,13 @@ export default function Socials(props) {
           >
             <Disclosure.Panel static as="div" className="leading-none">
               <div className="social-links">
-                <SocialTwitter social={props.twitter} />
-                <SocialInstagram social={props.instagram} />
-                <SocialTiktok social={props.tiktok} />
-                <SocialDiscord social={props.discord} />
-                <SocialTelegram social={props.telegram} />
-                <SocialGithub social={props.github} />
-                <SocialLinkedin social={props.linkedin} />
+                <SocialTwitter social={useEnsTextValue(props.data, 'com.twitter')} />
+                <SocialInstagram social={useEnsTextValue(props.data, 'com.instagram')} />
+                <SocialTiktok social={useEnsTextValue(props.data, 'com.tiktok')} />
+                <SocialDiscord social={useEnsTextValue(props.data, 'com.discord')} />
+                <SocialTelegram social={useEnsTextValue(props.data, 'org.telegram')} />
+                <SocialGithub social={useEnsTextValue(props.data, 'com.github')} />
+                <SocialLinkedin social={useEnsTextValue(props.data, 'com.linkedin')} />
               </div>
             </Disclosure.Panel>
           </Transition>

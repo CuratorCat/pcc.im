@@ -5,7 +5,8 @@ import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
 import { DuplicateIcon, GlobeAltIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
 import { formatUrl } from 'functions/SocialHelpers'
-import Socials from 'components/Socials'
+import { EnsTextType } from 'types'
+import { socialTextsQuery, Socials } from 'components/Socials'
 import Addresses from 'components/Addresses'
 import { EnsBadge } from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
@@ -29,14 +30,8 @@ export function Profile(props) {
   const [url, setUrl] = useState(null)
   const [email, setEmail] = useState(null)
   const [contentHash, setContentHash] = useState(null)
-  // social links
-  const [twitter, setTwitter] = useState(null)
-  const [instagram, setInstagram] = useState(null)
-  const [tiktok, setTiktok] = useState(null)
-  const [discord, setDiscord] = useState(null)
-  const [telegram, setTelegram] = useState(null)
-  const [github, setGithub] = useState(null)
-  const [linkedin, setLinkedin] = useState(null)
+  // social data
+  const [socialData, setSocialData] = useState<EnsTextType[]>([])
   // addresses
   const [btcAddress, setBtcAddress] = useState(null)
 
@@ -83,33 +78,14 @@ export function Profile(props) {
           console.log(e)
         })
 
-      // get social links
-      resolver.getText('com.twitter').then(result => {
-        result ? setTwitter(result) : setTwitter('')
-      })
-
-      resolver.getText('com.instagram').then(result => {
-        result ? setInstagram(result) : setInstagram('')
-      })
-
-      resolver.getText('com.tiktok').then(result => {
-        result ? setTiktok(result) : setTiktok('')
-      })
-
-      resolver.getText('com.discord').then(result => {
-        result ? setDiscord(result) : setDiscord('')
-      })
-
-      resolver.getText('org.telegram').then(result => {
-        result ? setTelegram(result) : setTelegram('')
-      })
-
-      resolver.getText('com.github').then(result => {
-        result ? setGithub(result) : setGithub('')
-      })
-
-      resolver.getText('com.linkedin').then(result => {
-        result ? setLinkedin(result) : setLinkedin('')
+      // get social data
+      socialTextsQuery.map(async text => {
+        resolver.getText(text).then(result => {
+          result
+            ? setSocialData(data => [...data, { key: text, value: result }])
+            : setSocialData(data => [...data, { key: text, value: '' }])
+          console.log(text, result)
+        })
       })
 
       // get addresses
@@ -237,15 +213,7 @@ export function Profile(props) {
         <Bio />
       </div>
 
-      <Socials
-        twitter={twitter}
-        github={github}
-        instagram={instagram}
-        tiktok={tiktok}
-        telegram={telegram}
-        discord={discord}
-        linkedin={linkedin}
-      />
+      <Socials data={socialData} />
 
       <Addresses ethAddress={props.address} btcAddress={btcAddress} />
     </>
