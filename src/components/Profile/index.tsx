@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { provider } from 'provider'
-import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
-import { DuplicateIcon, GlobeAltIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
-import { formatUrl } from 'functions/SocialHelpers'
+import { DuplicateIcon } from '@heroicons/react/outline'
 import { EnsTextType } from 'types'
 import { socialTextsQuery, Socials } from 'components/Socials'
+import { bioTextsQuery, Bio } from 'components/Bio'
 import Addresses from 'components/Addresses'
 import { EnsBadge } from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
@@ -25,11 +24,8 @@ const pccEnsMapper = {
 export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
   const [catId, setCatId] = useState(null)
-  // profile
-  const [description, setDescription] = useState(null)
-  const [url, setUrl] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [contentHash, setContentHash] = useState(null)
+  // bio data
+  const [bioData, setBioData] = useState<EnsTextType[]>([])
   // social data
   const [socialData, setSocialData] = useState<EnsTextType[]>([])
   // addresses
@@ -55,35 +51,30 @@ export function Profile(props) {
         result ? setAvatar(result) : setAvatar('')
       })
 
-      resolver.getText('description').then(result => {
-        result ? setDescription(result) : setDescription('')
-      })
-
-      resolver.getText('url').then(result => {
-        result ? setUrl(result) : setUrl('')
-      })
-
-      resolver.getText('email').then(result => {
-        result ? setEmail(result) : setEmail('')
-      })
-
       // get contentHash
       resolver
         .getContentHash()
         .then(result => {
-          result ? setContentHash(result) : setContentHash('')
+          setBioData(data => [...data, { key: 'contentHash', value: result ? result : '' }])
+          console.log('contentHash', result)
         })
         .catch(e => {
-          setContentHash('')
+          setBioData(data => [...data, { key: 'contentHash', value: '' }])
           console.log(e)
         })
+
+      // get bio data
+      bioTextsQuery.map(async text => {
+        resolver.getText(text).then(result => {
+          setBioData(data => [...data, { key: text, value: result ? result : '' }])
+          console.log(text, result)
+        })
+      })
 
       // get social data
       socialTextsQuery.map(async text => {
         resolver.getText(text).then(result => {
-          result
-            ? setSocialData(data => [...data, { key: text, value: result }])
-            : setSocialData(data => [...data, { key: text, value: '' }])
+          setSocialData(data => [...data, { key: text, value: result ? result : '' }])
           console.log(text, result)
         })
       })
@@ -102,77 +93,6 @@ export function Profile(props) {
 
     fetchData().catch(console.error)
   }, [props.ens])
-
-  const Bio = () => {
-    if (description == null || url == null || email == null || contentHash == null) {
-      return <div className="w-full py-3 animate-pulse">looking up ens profile</div>
-    }
-    if (description == '' && url == '' && email == '' && contentHash == '') {
-      return null
-    }
-    return (
-      <>
-        {/* description */}
-        {description == '' ? null : <p className="font-medium">{description}</p>}
-
-        {/* url, email, contentHash */}
-        {url == '' && email == '' && contentHash == '' ? null : (
-          <ul role="list" className="profile-links">
-            {/* url */}
-            {url == '' ? null : (
-              <li>
-                <GlobeAltIcon className="icon" aria-hidden="true" />
-                <Link href={formatUrl(url)}>
-                  <a target="_blank" className="group">
-                    <span>{url}</span>
-                    <ExternalLinkIcon className="inline-block -mt-0.5 w-3 h-3 text-violet-400 opacity-0 group-hover:opacity-100" />
-                  </a>
-                </Link>
-              </li>
-            )}
-
-            {/* email */}
-            {email == '' ? null : (
-              <li>
-                <MailIcon className="icon" aria-hidden="true" />
-                <a href={'mailto:' + email}>
-                  <span>{email}</span>
-                </a>
-              </li>
-            )}
-
-            {/* contentHash */}
-            {contentHash == '' ? null : (
-              <li>
-                <HashtagIcon className="icon" aria-hidden="true" />
-                <div>
-                  <span className="mr-2">{contentHash}</span>
-                  <span className="text-violet-400/25 group">
-                    <button
-                      className="hover:cursor-pointer text-sm group font-semibold tracking-wider hover:text-violet-400"
-                      onClick={() => copyTextWithToast(contentHash)}
-                    >
-                      <DuplicateIcon className="-mt-0.5 w-4 h-4 inline-block" />
-                    </button>
-                    {props.ens.endsWith('.eth') ? (
-                      <span className="pl-3">
-                        <Link href={'https://' + props.ens + '.limo'}>
-                          <a target="_blank" className=" hover:text-violet-400">
-                            <span>{props.ens + '.limo'}</span>
-                            <ExternalLinkIcon className="w-3 h-3 inline-block ml-0.5 -mt-0.5" />
-                          </a>
-                        </Link>
-                      </span>
-                    ) : null}
-                  </span>
-                </div>
-              </li>
-            )}
-          </ul>
-        )}
-      </>
-    )
-  }
 
   return (
     <>
@@ -210,7 +130,7 @@ export function Profile(props) {
       </div>
 
       <div className="flex flex-col space-y-1.5 leading-snug">
-        <Bio />
+        <Bio data={bioData} ens={props.ens} />
       </div>
 
       <Socials data={socialData} />
