@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { provider } from 'provider'
-import Link from 'next/link'
 import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
-import { DuplicateIcon, GlobeAltIcon, MailIcon, HashtagIcon, ExternalLinkIcon } from '@heroicons/react/outline'
-import { formatUrl } from 'functions/SocialHelpers'
-import Socials from 'components/Socials'
+import { DuplicateIcon } from '@heroicons/react/outline'
+import { EnsTextType, EnsCrytoAddressType } from 'types'
+import { socialTextsQuery, Socials } from 'components/Socials'
+import { bioTextsQuery, Bio } from 'components/Bio'
 import Addresses from 'components/Addresses'
 import { EnsBadge } from 'components/Profile/EnsBadge'
 import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
 import { ethers, BigNumber } from 'ethers'
-
+import { multichainAddresses } from 'constants/data'
 const pccEnsMapper = {
   contract: '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB',
   abi: [
@@ -24,21 +24,9 @@ const pccEnsMapper = {
 export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
   const [catId, setCatId] = useState(null)
-  // profile
-  const [description, setDescription] = useState(null)
-  const [url, setUrl] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [contentHash, setContentHash] = useState(null)
-  // social links
-  const [twitter, setTwitter] = useState(null)
-  const [instagram, setInstagram] = useState(null)
-  const [tiktok, setTiktok] = useState(null)
-  const [discord, setDiscord] = useState(null)
-  const [telegram, setTelegram] = useState(null)
-  const [github, setGithub] = useState(null)
-  const [linkedin, setLinkedin] = useState(null)
-  // addresses
-  const [btcAddress, setBtcAddress] = useState(null)
+  const [bioData, setBioData] = useState<EnsTextType[]>([])
+  const [socialData, setSocialData] = useState<EnsTextType[]>([])
+  const [addressesData, setAddressesData] = useState<EnsCrytoAddressType[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,143 +48,62 @@ export function Profile(props) {
         result ? setAvatar(result) : setAvatar('')
       })
 
-      resolver.getText('description').then(result => {
-        result ? setDescription(result) : setDescription('')
-      })
-
-      resolver.getText('url').then(result => {
-        result ? setUrl(result) : setUrl('')
-      })
-
-      resolver.getText('email').then(result => {
-        result ? setEmail(result) : setEmail('')
-      })
-
       // get contentHash
       resolver
         .getContentHash()
         .then(result => {
-          result ? setContentHash(result) : setContentHash('')
+          setBioData(data => [...data, { key: 'contentHash', value: result ? result : '' }])
+          console.log('contentHash', result)
         })
         .catch(e => {
-          setContentHash('')
+          setBioData(data => [...data, { key: 'contentHash', value: '' }])
           console.log(e)
         })
 
-      // get social links
-      resolver.getText('com.twitter').then(result => {
-        result ? setTwitter(result) : setTwitter('')
+      // get bio data
+      bioTextsQuery.map(async text => {
+        resolver.getText(text).then(result => {
+          setBioData(data => [...data, { key: text, value: result ? result : '' }])
+          console.log(text, result)
+        })
       })
 
-      resolver.getText('com.instagram').then(result => {
-        result ? setInstagram(result) : setInstagram('')
-      })
-
-      resolver.getText('com.tiktok').then(result => {
-        result ? setTiktok(result) : setTiktok('')
-      })
-
-      resolver.getText('com.discord').then(result => {
-        result ? setDiscord(result) : setDiscord('')
-      })
-
-      resolver.getText('org.telegram').then(result => {
-        result ? setTelegram(result) : setTelegram('')
-      })
-
-      resolver.getText('com.github').then(result => {
-        result ? setGithub(result) : setGithub('')
-      })
-
-      resolver.getText('com.linkedin').then(result => {
-        result ? setLinkedin(result) : setLinkedin('')
+      // get social data
+      socialTextsQuery.map(async text => {
+        resolver.getText(text).then(result => {
+          setSocialData(data => [...data, { key: text, value: result ? result : '' }])
+          console.log(text, result)
+        })
       })
 
       // get addresses
-      resolver
-        .getAddress(0)
-        .then(result => {
-          result ? setBtcAddress(result) : setBtcAddress('')
-        })
-        .catch(e => {
-          setBtcAddress('')
-          console.log(e)
+      multichainAddresses
+        .filter(item => item.coinType !== 60) // skip eth since it'll be passed from parent
+        .map(async item => {
+          resolver
+            .getAddress(item.coinType)
+            .then(result => {
+              setAddressesData(data => [...data, Object.assign({}, item, { address: result ? result : '' })])
+              console.log(item.symbol, result)
+            })
+            .catch(e => {
+              setAddressesData(data => [...data, Object.assign({}, item, { address: '' })])
+              console.log(e)
+            })
         })
     }
 
     fetchData().catch(console.error)
   }, [props.ens])
 
-  const Bio = () => {
-    if (description == null || url == null || email == null || contentHash == null) {
-      return <div className="w-full py-3 animate-pulse">looking up ens profile</div>
-    }
-    if (description == '' && url == '' && email == '' && contentHash == '') {
-      return null
-    }
-    return (
-      <>
-        {/* description */}
-        {description == '' ? null : <p className="font-medium">{description}</p>}
-
-        {/* url, email, contentHash */}
-        {url == '' && email == '' && contentHash == '' ? null : (
-          <ul role="list" className="profile-links">
-            {/* url */}
-            {url == '' ? null : (
-              <li>
-                <GlobeAltIcon className="icon" aria-hidden="true" />
-                <Link href={formatUrl(url)}>
-                  <a target="_blank" className="group">
-                    <span>{url}</span>
-                    <ExternalLinkIcon className="inline-block -mt-0.5 w-3 h-3 text-violet-400 opacity-0 group-hover:opacity-100" />
-                  </a>
-                </Link>
-              </li>
-            )}
-
-            {/* email */}
-            {email == '' ? null : (
-              <li>
-                <MailIcon className="icon" aria-hidden="true" />
-                <a href={'mailto:' + email}>
-                  <span>{email}</span>
-                </a>
-              </li>
-            )}
-
-            {/* contentHash */}
-            {contentHash == '' ? null : (
-              <li>
-                <HashtagIcon className="icon" aria-hidden="true" />
-                <div>
-                  <span className="mr-2">{contentHash}</span>
-                  <span className="text-violet-400/25 group">
-                    <button
-                      className="hover:cursor-pointer text-sm group font-semibold tracking-wider hover:text-violet-400"
-                      onClick={() => copyTextWithToast(contentHash)}
-                    >
-                      <DuplicateIcon className="-mt-0.5 w-4 h-4 inline-block" />
-                    </button>
-                    {props.ens.endsWith('.eth') ? (
-                      <span className="pl-3">
-                        <Link href={'https://' + props.ens + '.limo'}>
-                          <a target="_blank" className=" hover:text-violet-400">
-                            <span>{props.ens + '.limo'}</span>
-                            <ExternalLinkIcon className="w-3 h-3 inline-block ml-0.5 -mt-0.5" />
-                          </a>
-                        </Link>
-                      </span>
-                    ) : null}
-                  </span>
-                </div>
-              </li>
-            )}
-          </ul>
-        )}
-      </>
-    )
-  }
+  useEffect(() => {
+    // assign eth address passed from parent
+    props.address !== null &&
+      setAddressesData(data => [
+        ...data,
+        Object.assign({}, multichainAddresses.filter(item => item.coinType == 60)[0], { address: props.address }),
+      ])
+  }, [props.address])
 
   return (
     <>
@@ -234,20 +141,12 @@ export function Profile(props) {
       </div>
 
       <div className="flex flex-col space-y-1.5 leading-snug">
-        <Bio />
+        <Bio data={bioData} ens={props.ens} />
       </div>
 
-      <Socials
-        twitter={twitter}
-        github={github}
-        instagram={instagram}
-        tiktok={tiktok}
-        telegram={telegram}
-        discord={discord}
-        linkedin={linkedin}
-      />
+      <Socials data={socialData} />
 
-      <Addresses ethAddress={props.address} btcAddress={btcAddress} />
+      <Addresses data={addressesData} />
     </>
   )
 }
