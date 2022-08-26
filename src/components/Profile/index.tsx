@@ -3,7 +3,7 @@ import { provider } from 'provider'
 import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
 import { DuplicateIcon } from '@heroicons/react/outline'
-import { EnsTextType } from 'types'
+import { EnsTextType, EnsCrytoAddressType } from 'types'
 import { socialTextsQuery, Socials } from 'components/Socials'
 import { bioTextsQuery, Bio } from 'components/Bio'
 import Addresses from 'components/Addresses'
@@ -12,7 +12,7 @@ import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
 import { ethers, BigNumber } from 'ethers'
-
+import { multichainAddresses } from 'constants/data'
 const pccEnsMapper = {
   contract: '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB',
   abi: [
@@ -24,12 +24,9 @@ const pccEnsMapper = {
 export function Profile(props) {
   const [avatar, setAvatar] = useState(null)
   const [catId, setCatId] = useState(null)
-  // bio data
   const [bioData, setBioData] = useState<EnsTextType[]>([])
-  // social data
   const [socialData, setSocialData] = useState<EnsTextType[]>([])
-  // addresses
-  const [btcAddress, setBtcAddress] = useState(null)
+  const [addressesData, setAddressesData] = useState<EnsCrytoAddressType[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,19 +77,33 @@ export function Profile(props) {
       })
 
       // get addresses
-      resolver
-        .getAddress(0)
-        .then(result => {
-          result ? setBtcAddress(result) : setBtcAddress('')
-        })
-        .catch(e => {
-          setBtcAddress('')
-          console.log(e)
+      multichainAddresses
+        .filter(item => item.coinType !== 60) // skip eth since it'll be passed from parent
+        .map(async item => {
+          resolver
+            .getAddress(item.coinType)
+            .then(result => {
+              setAddressesData(data => [...data, Object.assign({}, item, { address: result ? result : '' })])
+              console.log(item.symbol, result)
+            })
+            .catch(e => {
+              setAddressesData(data => [...data, Object.assign({}, item, { address: '' })])
+              console.log(e)
+            })
         })
     }
 
     fetchData().catch(console.error)
   }, [props.ens])
+
+  useEffect(() => {
+    // assign eth address passed from parent
+    props.address !== null &&
+      setAddressesData(data => [
+        ...data,
+        Object.assign({}, multichainAddresses.filter(item => item.coinType == 60)[0], { address: props.address }),
+      ])
+  }, [props.address])
 
   return (
     <>
@@ -135,7 +146,7 @@ export function Profile(props) {
 
       <Socials data={socialData} />
 
-      <Addresses ethAddress={props.address} btcAddress={btcAddress} />
+      <Addresses data={addressesData} />
     </>
   )
 }

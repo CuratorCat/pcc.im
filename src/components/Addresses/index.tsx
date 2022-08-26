@@ -1,9 +1,11 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 import { AddressItem } from 'components/Addresses/AddressItem'
+import { multichainAddresses } from 'constants/data'
+import { useEnsAddressValue } from 'utils/EnsRecords'
 
 export default function Addresses(props) {
-  if (props.ethAddress == null || props.btcAddress == null) {
+  if (props.data.length !== multichainAddresses.length) {
     return (
       <div className="relative w-full mx-0 group">
         <div className="flex justify-between items-center ">
@@ -14,7 +16,11 @@ export default function Addresses(props) {
     )
   }
 
-  if (props.ethAddress == '' && props.btcAddress == '') return null
+  if (props.data.filter(item => item.value !== '').length === 0) {
+    return null
+  }
+
+  props.data.sort((a, b) => b.coinType - a.coinType)
 
   return (
     <Disclosure defaultOpen>
@@ -47,21 +53,17 @@ export default function Addresses(props) {
           >
             <Disclosure.Panel static as="div" className="leading-none">
               <ul className="addresses-list">
-                {props.ethAddress == '' && props.btcAddress == '' && (
-                  <div className="opacity-50">no supported blockchain addresses found</div>
-                )}
-
                 {
                   // ethAddress
-                  props.ethAddress != null && props.ethAddress != '' && (
-                    <AddressItem type="eth" address={props.ethAddress} />
+                  useEnsAddressValue(props.data, 60) != null && useEnsAddressValue(props.data, 60) != '' && (
+                    <AddressItem type="eth" address={useEnsAddressValue(props.data, 60)} />
                   )
                 }
 
                 {
                   // btcAddress
-                  props.btcAddress != null && props.btcAddress != '' && (
-                    <AddressItem type="btc" address={props.btcAddress} />
+                  useEnsAddressValue(props.data, 0) != null && useEnsAddressValue(props.data, 0) != '' && (
+                    <AddressItem type="btc" address={useEnsAddressValue(props.data, 0)} />
                   )
                 }
               </ul>
