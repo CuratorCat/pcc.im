@@ -1,8 +1,7 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
-import { AddressItem } from 'components/Addresses/AddressItem'
 import { multichainAddresses } from 'constants/data'
-import { useEnsAddressValue } from 'utils/EnsRecords'
+import { AddressItem } from './AddressItem'
 
 export default function Addresses(props) {
   if (props.data.length !== multichainAddresses.length) {
@@ -20,7 +19,8 @@ export default function Addresses(props) {
     return null
   }
 
-  props.data.sort((a, b) => b.coinType - a.coinType)
+  const data = props.data.filter(data => data.address !== '')
+  data.sort((a, b) => a.coinType - b.coinType)
 
   return (
     <Disclosure defaultOpen>
@@ -53,19 +53,13 @@ export default function Addresses(props) {
           >
             <Disclosure.Panel static as="div" className="leading-none">
               <ul className="addresses-list">
-                {
-                  // ethAddress
-                  useEnsAddressValue(props.data, 60) != null && useEnsAddressValue(props.data, 60) != '' && (
-                    <AddressItem type="eth" address={useEnsAddressValue(props.data, 60)} />
-                  )
-                }
-
-                {
-                  // btcAddress
-                  useEnsAddressValue(props.data, 0) != null && useEnsAddressValue(props.data, 0) != '' && (
-                    <AddressItem type="btc" address={useEnsAddressValue(props.data, 0)} />
-                  )
-                }
+                {data.map(data => (
+                  <AddressItem
+                    data={data}
+                    chainData={multichainAddresses.filter(item => item.coinType == data.coinType)[0]}
+                    key={data.coinType}
+                  />
+                ))}
               </ul>
             </Disclosure.Panel>
           </Transition>

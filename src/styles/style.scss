@@ -19,7 +19,8 @@ footer {
   }
 }
 
-.Toastify__close-button, .Toastify__close-button--light {
+.Toastify__close-button,
+.Toastify__close-button--light {
   display: none !important;
 }
 
@@ -80,7 +81,7 @@ footer {
   li {
     @apply flex space-x-2 items-center bg-violet-400/20 rounded-2xl p-2;
     .logo {
-      @apply flex shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full place-items-center items-center text-center align-middle justify-center;
+      @apply flex shrink-0 w-8 h-8 md:w-10 md:h-10 place-items-center items-center text-center align-middle justify-center;
     }
     .asset {
       @apply flex-grow break-all;

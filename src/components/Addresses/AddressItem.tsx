@@ -1,31 +1,35 @@
-import { DuplicateIcon } from '@heroicons/react/outline'
-import { EthereumLogo, BitcoinLogo } from 'components/icons'
+import { DuplicateIcon, ExternalLinkIcon } from '@heroicons/react/outline'
 import { copyTextWithToast } from 'functions/CopyHelpers'
+import Link from 'next/link'
 
-export const AddressItem = ({ type = null, address = null }) => {
-  if (type === null || address === null) return null
-  return (
-    <li>
-      {type === 'eth' ? (
-        <EthereumLogo className="logo bg-white" />
-      ) : type === 'btc' ? (
-        <BitcoinLogo className="logo" />
-      ) : (
-        ''
-      )}
-      <div className="asset">
-        <h4>{type === 'eth' ? 'ethereum' : type === 'btc' ? 'bitcoin' : ''}</h4>
-        <div className="address">{address}</div>
-      </div>
+export const AddressItem = ({ data, chainData }) => (
+  <li>
+    <img src={chainData.icon} className="logo" alt={`${chainData.crypto} Logo`} />
+    <div className="asset">
+      <h4>{chainData.crypto}</h4>
+      <div className="address">{data.address}</div>
+    </div>
+    {chainData.blockExplorer ? (
       <div>
-        <button
-          onClick={() => {
-            copyTextWithToast(address)
-          }}
-        >
-          <DuplicateIcon className="h-8 w-8 p-1 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
-        </button>
+        <Link href={chainData.blockExplorer.addressUrl.replace('$$ADDRESS$$', data.address)}>
+          <a
+            target="_blank"
+            className="text-violet-400/40 hover:cursor-pointer text-sm group font-semibold tracking-wider hover:text-violet-400 "
+            title={`View on ${chainData.blockExplorer.name}`}
+          >
+            <ExternalLinkIcon className="h-8 w-8 p-1 bg-black/10 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+          </a>
+        </Link>
       </div>
-    </li>
-  )
-}
+    ) : null}
+    <div
+      onClick={() => {
+        copyTextWithToast(data.address)
+      }}
+      title="Copy address"
+      className="hover:cursor-pointer"
+    >
+      <DuplicateIcon className="h-8 w-8 p-1 bg-black/10 rounded-lg text-violet-400/25 hover:text-violet-400 transition-all duration-150" />
+    </div>
+  </li>
+)
