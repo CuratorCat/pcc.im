@@ -3,7 +3,7 @@ import { provider } from 'provider'
 import { Avatar } from 'components/Avatar'
 import { useEffect } from 'react'
 import { DuplicateIcon } from '@heroicons/react/outline'
-import { EnsTextType, EnsCrytoAddressType } from 'types'
+import { EnsTextType, EnsCrytoAddressQueryType } from 'types'
 import { socialTextsQuery, Socials } from 'components/Socials'
 import { bioTextsQuery, Bio } from 'components/Bio'
 import Addresses from 'components/Addresses'
@@ -12,7 +12,7 @@ import { shortenAddress } from 'functions/AddressHelpers'
 import { copyTextWithToast } from 'functions/CopyHelpers'
 import Head from 'next/head'
 import { ethers, BigNumber } from 'ethers'
-import { multichainAddresses } from 'constants/data'
+import { multichainAddressesQuery } from 'constants/data'
 const pccEnsMapper = {
   contract: '0x9B6d20F524367D7E98ED849d37Fc662402DCa7FB',
   abi: [
@@ -26,7 +26,7 @@ export function Profile(props) {
   const [catId, setCatId] = useState(null)
   const [bioData, setBioData] = useState<EnsTextType[]>([])
   const [socialData, setSocialData] = useState<EnsTextType[]>([])
-  const [addressesData, setAddressesData] = useState<EnsCrytoAddressType[]>([])
+  const [addressesData, setAddressesData] = useState<EnsCrytoAddressQueryType[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,14 +77,14 @@ export function Profile(props) {
       })
 
       // get addresses
-      multichainAddresses
+      multichainAddressesQuery
         .filter(item => item.coinType !== 60) // skip eth since it'll be passed from parent
         .map(async item => {
           resolver
             .getAddress(item.coinType)
             .then(result => {
               setAddressesData(data => [...data, Object.assign({}, item, { address: result ? result : '' })])
-              console.log(item.symbol, result)
+              console.log(item.coinType, result)
             })
             .catch(e => {
               setAddressesData(data => [...data, Object.assign({}, item, { address: '' })])
@@ -101,7 +101,7 @@ export function Profile(props) {
     props.address !== null &&
       setAddressesData(data => [
         ...data,
-        Object.assign({}, multichainAddresses.filter(item => item.coinType == 60)[0], { address: props.address }),
+        Object.assign({}, multichainAddressesQuery.filter(item => item.coinType == 60)[0], { address: props.address }),
       ])
   }, [props.address])
 

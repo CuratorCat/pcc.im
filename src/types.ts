@@ -10,8 +10,15 @@ export type EnsCrytoAddressQueryType = {
   address: Nullable<string>
 }
 
-export type EnsCrytoAddressType = EnsCrytoAddressQueryType & {
+export type EnsCrytoAddressType = {
+  coinType: number
   crypto: string
   symbol: string
   icon: string
+  blockExplorer?: {
+    name: string
+    icon: string
+    url: string
+    addressUrl: string
+  }
 }
