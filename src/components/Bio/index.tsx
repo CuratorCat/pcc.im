@@ -21,6 +21,14 @@ export function Bio(props) {
 
   return (
     <>
+      {/* notice */}
+      {bioValue('notice') === '' ? null : (
+        <div className="-mx-6 px-6 py-2 barberRollBg">
+          <p className="font-bold uppercase">notice</p>
+          <p className="font-medium ">{bioValue('notice')}</p>
+        </div>
+      )}
+
       {/* description */}
       {bioValue('description') == '' ? null : <p className="font-medium">{bioValue('description')}</p>}
 

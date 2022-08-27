@@ -118,3 +118,18 @@ footer {
     @apply bg-violet-400 text-black/50;
   }
 }
+
+.barberRollBg {
+  background-image: repeating-linear-gradient(-30deg, #6a35c2aa, #6a35c2aa 10px, #5d23b7aa 10px, #5d23b7aa 20px);
+  background-size: 200% 200%;
+  animation: barberRoll 30s linear infinite;
+}
+
+@keyframes barberRoll {
+  0% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
