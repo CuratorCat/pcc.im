@@ -15,7 +15,7 @@ export default function Addresses(props) {
     )
   }
 
-  if (props.data.filter(item => item.value !== '').length === 0) {
+  if (props.data.filter(item => item.address !== '').length === 0) {
     return null
   }
 
@@ -34,6 +34,7 @@ export default function Addresses(props) {
                 } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
               >
                 addresses
+                <span className={`${open ? 'opacity-0' : 'opacity-100'} text-base px-2`}>({data.length})</span>
               </h3>
               <ChevronDownIcon
                 className={`${

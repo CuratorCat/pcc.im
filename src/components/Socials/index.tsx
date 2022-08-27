@@ -47,6 +47,9 @@ export function Socials(props) {
                 } text-4xl text-violet-400 font-light py-1 transition-all duration-300`}
               >
                 socials
+                <span className={`${open ? 'opacity-0' : 'opacity-100'} text-base px-2`}>
+                  ({props.data.filter(item => item.value !== '').length})
+                </span>
               </h3>
               <ChevronDownIcon
                 className={`${

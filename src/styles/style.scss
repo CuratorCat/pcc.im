@@ -76,10 +76,9 @@ footer {
 }
 
 .addresses-list {
-  @apply flex flex-col space-y-3;
-
+  @apply flex flex-col -mb-2 gap-0;
   li {
-    @apply flex space-x-2 items-center bg-violet-400/20 rounded-2xl p-2;
+    @apply flex space-x-2 items-center bg-violet-400/0 hover:bg-violet-400/20 rounded-2xl sm:rounded-3xl p-2 -mx-2 transition-all duration-150;
     .logo {
       @apply flex shrink-0 w-8 h-8 md:w-10 md:h-10 place-items-center items-center text-center align-middle justify-center;
     }
