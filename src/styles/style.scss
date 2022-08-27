@@ -91,7 +91,7 @@ footer {
       }
 
       .address {
-        @apply text-sm font-semibold leading-tight;
+        @apply text-xs sm:text-sm font-semibold leading-tight;
       }
     }
     .action {
